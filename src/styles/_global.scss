@@ -1,0 +1,37 @@
+@import "_variables.scss";
+
+// Global styles
+// -------------
+
+body {
+    background-color: map-get($brand-gray, 'gray-200');
+    font-size: 1rem;
+    color: $text-color;
+    font-family: Nunito, $fallback-fonts;
+}
+
+ba-root {
+
+    .container {
+        width: 85%;
+        margin: auto;
+        margin-top: 4rem;
+    }
+
+    section {
+        background-color: #FFF;
+        padding: $padding-xl;
+    }
+
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+}
+
+
+
+
