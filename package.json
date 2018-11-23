@@ -4,7 +4,7 @@
     "scripts": {
         "ng": "ng",
         "prestart": "npm run lint && npm run check:conf",
-        "start": "ng serve --verbose --aot",
+        "start": "ng serve --verbose --aot --proxy-config src/proxy.conf.js",
         "start:prod": "npm run configure -- --prod && npm run start -- --prod",
         "prebuild": "npm run lint && npm run check:conf",
         "build": "ng build --aot",
