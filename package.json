@@ -17,7 +17,8 @@
         "test:watch": "ng test --karma-config src/karma.conf.js",
         "e2e": "ng e2e --port 4201",
         "configure": "node src/conf/instrument.js",
-        "check:conf": "node src/conf/check-conf.js"
+        "check:conf": "node src/conf/check-conf.js",
+        "compodoc": "compodoc -p src/tsconfig.app.json -d docs/compodoc -n 'Brennus Analytics'"
     },
     "private": true,
     "dependencies": {
@@ -39,6 +40,7 @@
         "@angular/cli": "~7.0.6",
         "@angular/compiler-cli": "~7.0.0",
         "@angular/language-service": "~7.0.0",
+        "@compodoc/compodoc": "^1.1.5",
         "@types/jasmine": "~2.8.8",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "~8.9.4",
