@@ -12,6 +12,7 @@
             "element",
             "ba",
             "kebab-case"
-        ]
+        ],
+    "no-non-null-assertion": false
     }
 }
