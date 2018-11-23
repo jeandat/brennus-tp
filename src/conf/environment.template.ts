@@ -1,10 +1,10 @@
 
 export const environment = {
-    production:true,
-    mocks:false,
-    baseName:'',
-    api:'/api',
-    apiUrl:'/api'
+    production:__PROD__,
+    mocks:__MOCKS__,
+    baseName:'__BASENAME__',
+    api:'__API__',
+    apiUrl:'__API__'
 };
 
 // if api is an absolute path, we take it. If relative, we construct dynamically an absolute path.
