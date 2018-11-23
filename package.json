@@ -13,7 +13,7 @@
         "pretest": "npm run check:conf",
         "test": "ng test --karma-config src/karma-ci.conf.js --code-coverage",
         "test:watch": "ng test --karma-config src/karma.conf.js",
-        "e2e": "ng e2e",
+        "e2e": "ng e2e --port 4201",
         "configure": "node src/conf/instrument.js",
         "check:conf": "node src/conf/check-conf.js"
     },

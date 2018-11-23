@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'ba-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector:'ba-root',
+    template:'<router-outlet></router-outlet>',
 })
 export class AppComponent {
-  title = 'brennus-tp';
+
+    constructor(private titleService:Title) {
+
+        titleService.setTitle('Brennus Analytics');
+    }
 }
