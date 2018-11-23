@@ -9,6 +9,8 @@
         "prebuild": "npm run lint && npm run check:conf",
         "build": "ng build --aot",
         "build:prod": "npm run configure -- --prod && npm run build -- --prod",
+        "build:stats": "npm run configure -- --prod --no-mocks && npm run build -- --prod --stats-json --source-map",
+        "stats": "npm run build:stats && webpack-bundle-analyzer dist/brennus-tp/stats.json",
         "lint": "ng lint --format stylish",
         "pretest": "npm run check:conf",
         "test": "ng test --karma-config src/karma-ci.conf.js --code-coverage",
@@ -53,9 +55,11 @@
         "puppeteer": "^1.10.0",
         "replace": "^1.0.0",
         "shelljs": "^0.8.2",
+        "source-map-explorer": "^1.6.0",
         "ts-node": "~7.0.0",
         "tslint": "~5.11.0",
         "typescript": "~3.1.6",
+        "webpack-bundle-analyzer": "^3.0.3",
         "yargs-parser": "^11.0.0"
     }
 }
