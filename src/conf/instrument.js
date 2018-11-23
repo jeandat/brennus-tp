@@ -18,7 +18,7 @@ function main() {
         __PROD__:false,
         __MOCKS__:false,
         __BASENAME__:'',
-        __API__:'/v2/api-docs'
+        __API__:'/api'
     };
 
     const { prod, mocks, baseName, api } = argv;
