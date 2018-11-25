@@ -10,7 +10,8 @@ import { RouterModule } from '@angular/router';
 const components = [
     NavbarComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    ActivityIndicatorComponent
 ];
 
 

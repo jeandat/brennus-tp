@@ -1,0 +1,8 @@
+@import 'variables';
+
+:host{
+    margin: 1rem 1.3rem;
+    .spinner-layer {
+        border-color: map-get($brand, 'black');
+    }
+}
