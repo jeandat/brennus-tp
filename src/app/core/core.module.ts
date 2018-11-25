@@ -27,6 +27,8 @@ const components = [
     exports:[
         ...components,
         HttpClientModule
+    providers:[
+        { provide:HTTP_INTERCEPTORS, useClass:CommonErrorsFilter, multi:true },
     ]
 })
 export class CoreModule {
