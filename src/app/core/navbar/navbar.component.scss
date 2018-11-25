@@ -1,0 +1,62 @@
+@import 'variables';
+
+nav {
+    // Necessary to make z-index works properly.
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    overflow: hidden;
+    color: $navbar-font-color;
+    background-color: $navbar-bg-color;
+    .brand-logo {
+        margin-left: 1rem;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        img {
+            height: 3rem;
+            @media #{$small-and-down} {
+                transform: scale(0.8);
+            }
+        }
+    }
+}
+
+#nav-desktop {
+    margin-left: 11rem;
+}
+
+.nav-link {
+    background-color: transparent !important;
+    &:hover {
+        color: $accentuation-color;
+        background-color: transparent;
+    }
+    &.active {
+        color: $accentuation-color;
+    }
+    a {
+        font-weight: bold;
+        color: inherit;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+    .sidenav & {
+        border-bottom: 1px solid map-get($brand-gray, '300');
+    }
+    .sidenav &:nth-child(2) {
+        border-top: 1px solid map-get($brand-gray, '300');
+    }
+}
+
+.sidenav {
+    color: $sidenav-font-color;
+    background-color: $sidenav-bg-color;
+    &__header {
+        width: 100%;
+        height: 10rem;
+        background-color: map-get($brand, 'blue');
+    }
+}

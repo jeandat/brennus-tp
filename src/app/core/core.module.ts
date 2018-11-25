@@ -3,24 +3,29 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './navbar/navbar.component';
+import { RouterModule } from '@angular/router';
 
 
 const components = [
-    HomeComponent,
-    NotFoundComponent
+    NavbarComponent,
+    NotFoundComponent,
+    HomeComponent
 ];
 
 
 @NgModule({
     imports:[
         CommonModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterModule
     ],
     declarations:[
         ...components
     ],
     exports:[
-        ...components
+        ...components,
+        HttpClientModule
     ]
 })
 export class CoreModule {
