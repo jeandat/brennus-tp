@@ -81,12 +81,12 @@ It can also be enabled in `angular.json`.
 "serve": {
     "builder": "@angular-devkit/build-angular:dev-server",
     "options": {
-        "browserTarget": "cybersoc-front:build",
+        "browserTarget": "brennus-tp:build",
         "proxyConfig": "src/proxy.conf.js" <-------------------------- HERE
     },
     "configurations": {
         "production": {
-            "browserTarget": "cybersoc-front:build:production"
+            "browserTarget": "brennus-tp:build:production"
         }
     }
 },

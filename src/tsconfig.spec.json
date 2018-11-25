@@ -1,21 +1,22 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/spec",
-    "types": [
-      "jasmine",
-      "node"
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../out-tsc/spec",
+        "types": [
+            "jasmine",
+            "node",
+            "materialize-css"
+        ]
+    },
+    "files": [
+        "test.ts",
+        "polyfills.ts"
+    ],
+    "include": [
+        "**/*.spec.ts",
+        "**/*.d.ts"
+    ],
+    "exclude": [
+        "src/conf/*"
     ]
-  },
-  "files": [
-    "test.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ],
-  "exclude": [
-    "src/conf/*"
-  ]
 }

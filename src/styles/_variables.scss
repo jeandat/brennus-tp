@@ -1,34 +1,114 @@
 
-// Colors
-// ------
+// Materialize color palette
+// -------------------------
+@import '~materialize-css/sass/components/color-variables';
+
+
+// Theme palettes
+// --------------
 
 $brand-gray: (
     'base': #8F8F8F,
-    'gray-100': #FAFAFA,
-    'gray-200': #F6F6F6,
-    'gray-300': #EEE,
-    'gray-400': #DDD,
-    'gray-500': #CCC,
-    'gray-600': #999,
-    'gray-700': #666,
-    'gray-800': #555,
-    'gray-900': #444,
-    'gray-1000': #333
+    '100': #FAFAFA,
+    '200': #F6F6F6,
+    '300': #EEE,
+    '400': #DDD,
+    '500': #CCC,
+    '600': #999,
+    '700': #666,
+    '800': #555,
+    '900': #444,
+    '1000': #333
 );
 
-$text-color: map-get($brand-gray, 'gray-1000');
+$brand: (
+    'white': #FFF, // Core color
+    'black': #000, // Core color
+    'gray': map-get($brand-gray, 'base'), // Core color
+    'blue': #185b76, // Core color
+    'yellow': #f9b200, // Core color
+    'red': #DC1D2F, // Utility color
+    'green': #33C86C // Utility color
+);
+
+// Override Materialize variables
+// ------------------------------
+
+// Colors
+$primary-color: map-get($brand, 'white');
+$primary-light-color: map-get($brand-gray, '300');
+$primary-dark-color: map-get($brand-gray, '600');
+$secondary-color: map-get($brand-gray, '1000');
+$accentuation-color: map-get($brand, 'yellow');
+
+$success-color: map-get($brand, 'green');
+$info-color: map-get($brand, 'purple');
+$warning-color: map-get($brand, 'yellow');
+$error-color: map-get($brand, 'red');
+
+$text-color: map-get($brand-gray, '1000');
+
+// Links
+$link-color: $accentuation-color;
+
+// Navbar
+$navbar-height: 5rem;
+$navbar-font-color: map-get($brand, 'blue');
+$sidenav-font-color: map-get($brand-gray, '1000');
+$sidenav-bg-color: map-get($brand, 'white');
+
+// Toasts
+$toast-color: $secondary-color;
+$toast-text-color: $primary-light-color;
+$toast-action-color: $accentuation-color; // Unfortunately, due to a bug, this variable is overwritten by materialize
+
+// Preloader
+$spinner-default-color: $secondary-color;
+
+// Typography
+$h1-fontsize: 2rem;
+$h2-fontsize: 1.5rem;
+$h3-fontsize: 1.2rem;
+$h4-fontsize: 1rem;
+//$h5-fontsize: 1.64rem;
+//$h6-fontsize: 1.15rem
+
+
+// Load Materialize variables
+// --------------------------
+
+@import "~materialize-css/sass/components/variables";
+
+
+
+// Define custom variables
+// -----------------------
 
 // Spacing
-// -------
-
 $padding-s: .2rem;
 $padding-m: .5rem;
 $padding-l: 1rem;
 $padding-xl: 2rem;
 $padding-default: $padding-l;
 
-
 // Fonts
-// -----
-
 $fallback-fonts: Roboto, "Helvetica Neue", Arial, sans-serif;
+$material-icons-font-path: '~material-icons/iconfont/';
+
+// Toasts
+$toast-text-size: 0.9rem;
+
+// Images
+$imageRatio: 9 / 16 * 100%;
+
+// Navbar
+$navbar-bg-color: map-get($brand, 'white');
+
+// Datatable
+$datatable-page-limit: 50;
+$datatable-row-height: 40px;
+$datatable-header-height: 50px;
+$datatable-footer-height: 50px;
+
+// Media Queries
+$medium-and-large: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$large-screen})";

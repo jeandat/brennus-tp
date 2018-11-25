@@ -3,11 +3,49 @@
 // Global styles
 // -------------
 
+html {
+    @media #{$medium-and-up} {
+        font-size: 15px !important;
+    }
+    @media #{$large-and-up} {
+        font-size: 16px !important;
+    }
+}
+
 body {
-    background-color: map-get($brand-gray, 'gray-200');
+    background-color: map-get($brand-gray, '200');
     font-size: 1rem;
     color: $text-color;
     font-family: Nunito, $fallback-fonts;
+    padding-top: $navbar-height;
+
+    &::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+}
+
+// Scrollbars (Chrome only)
+
+::-webkit-scrollbar {
+    width: 0.2rem;
+    height: 0.2rem;
+}
+
+::-webkit-scrollbar-track {
+    background: $primary-light-color;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $primary-dark-color;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: $secondary-color;
+}
+
+:focus {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
 
 ba-root {
@@ -21,6 +59,7 @@ ba-root {
     section {
         background-color: #FFF;
         padding: $padding-xl;
+        margin-bottom: 2rem;
     }
 
     a {

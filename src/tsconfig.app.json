@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "strictNullChecks": false,
-    "types": []
+    "types": ["materialize-css"]
   },
   "exclude": [
     "test.ts",
