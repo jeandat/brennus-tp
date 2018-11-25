@@ -19,7 +19,7 @@ import Sidenav = M.Sidenav;
         <ul #sidenav class="sidenav no-underline" id="nav-mobile">
             <li class="sidenav__header"></li>
             <li routerLinkActive="active" class="nav-link"><a class="waves-effect sidenav-close" routerLink="/home">Home</a></li>
-            <li routerLinkActive="active" class="nav-link"><a class="waves-effect sidenav-close" routerLink="/rules">Admin</a></li>
+            <li routerLinkActive="active" class="nav-link"><a class="waves-effect sidenav-close" routerLink="/admin">Admin</a></li>
         </ul>
     `,
     styleUrls:[ './navbar.component.scss' ]
