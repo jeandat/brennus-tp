@@ -8,6 +8,7 @@ import { SearchCriteria } from '../model/search-criteria.model';
 
 export enum GoodActionTypes {
     GSV_GetGoodList         = '[Good Search View] Get Good List',
+    SLV_GetGoodList         = '[Statistic List View] Get Good List',
     GAPI_GetGoodListSuccess = '[Good API] Get Good List Success',
     GAPI_GetGoodListFailure = '[Good API] Get Good List Failure',
     GSV_SetSearchFilters    = '[Good Search View] Set Search Filters',
@@ -19,6 +20,12 @@ export enum GoodActionTypes {
 
 export class GSV_GetGoodList implements Action {
     readonly type = GoodActionTypes.GSV_GetGoodList;
+
+    constructor(public payload = {}) {}
+}
+
+export class SLV_GetGoodList implements Action {
+    readonly type = GoodActionTypes.SLV_GetGoodList;
 
     constructor(public payload = {}) {}
 }
@@ -61,6 +68,7 @@ export class GSVC_SetSearchResults implements Action {
 
 export type GoodActions =
     GSV_GetGoodList
+    | SLV_GetGoodList
     | ResetGoodList
     | GAPI_GetGoodListSuccess
     | GAPI_GetGoodListFailure

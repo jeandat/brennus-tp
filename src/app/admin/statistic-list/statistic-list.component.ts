@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { goodSelectors } from '../../good/store/good.selectors';
-import { startWith, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { Good } from '../../core/model/good.model';
 import { Observable, Subject } from 'rxjs';
 import { AppState } from '../../core/store/core.reducer';
+import { SLV_GetGoodList } from '../../good/store/good.actions';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class StatisticListComponent implements OnInit, OnDestroy {
 
     ngOnInit():void {
         this.setGoods();
+        this.store.dispatch(new SLV_GetGoodList());
     }
 
     ngOnDestroy():void {
@@ -46,6 +48,7 @@ export class StatisticListComponent implements OnInit, OnDestroy {
     setGoods() {
         this.store.pipe(
             select(goodSelectors.selectAll),
+            filter(goods => goods != null && goods.length > 0),
             takeUntil(this.done)
         ).subscribe(
             ((goods:Good[]) => {

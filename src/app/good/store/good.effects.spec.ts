@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { of, ReplaySubject, throwError } from 'rxjs';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { ActionWithPayload, AppState } from '../../core/store/core.reducer';
@@ -11,9 +11,9 @@ import { GoodService } from '../good-service/good.service';
 import {
     GAPI_GetGoodListFailure,
     GAPI_GetGoodListSuccess,
-    GSV_GetGoodList,
     GSV_SetSearchFilters,
-    GSVC_SetSearchResults
+    GSVC_SetSearchResults,
+    SLV_GetGoodList
 } from './good.actions';
 import { SearchCriteria } from '../model/search-criteria.model';
 import Spy = jasmine.Spy;
@@ -65,7 +65,6 @@ describe('Good Effects', () => {
             expect(result).toEqual(outputAction);
             done();
         });
-
     });
 
     it('should filter goods with goods from API', (done) => {
@@ -88,10 +87,9 @@ describe('Good Effects', () => {
             expect(result).toEqual(outputAction);
             done();
         });
-
     });
 
-    it('should update state with HTTP error', (done) => {
+    it('should update state with HTTP error when setting search filters', (done) => {
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
         const inputAction = new GSV_SetSearchFilters({ criteria });
@@ -106,6 +104,61 @@ describe('Good Effects', () => {
         actions.next(inputAction);
 
         effects.filterGoodList$.subscribe((result:GAPI_GetGoodListFailure) => {
+            expect(result instanceof GAPI_GetGoodListFailure).toBe(true);
+            expect(result.payload.error).toBe(outputAction.payload.error);
+            done();
+        });
+    });
+
+    it('should load goods from api', (done) => {
+        const inputAction = new SLV_GetGoodList();
+
+        const outputAction = new GAPI_GetGoodListSuccess({ goods:mocks });
+
+        (storeMock.select as Spy).and.returnValue(of([]));
+        (gsMock.getList as Spy).and.returnValue(of(mocks));
+
+        actions = new ReplaySubject<ActionWithPayload>(1);
+        actions.next(inputAction);
+
+        effects.getGoodList$.subscribe((result:GAPI_GetGoodListSuccess) => {
+            expect(result instanceof GAPI_GetGoodListSuccess).toBe(true);
+            expect(result).toEqual(outputAction);
+            done();
+        });
+
+    });
+
+    it('should load goods from store', (done) => {
+        const inputAction = new SLV_GetGoodList();
+
+        const outputAction = { type:'noop' };
+
+        (storeMock.select as Spy).and.returnValue(of(mocks));
+        (gsMock.getList as Spy).and.returnValue(of(mocks));
+
+        actions = new ReplaySubject<ActionWithPayload>(1);
+        actions.next(inputAction);
+
+        effects.getGoodList$.subscribe((result:Action) => {
+            expect(result).toEqual(outputAction);
+            done();
+        });
+    });
+
+    it('should update state with HTTP error when fetching goods', (done) => {
+        const inputAction = new SLV_GetGoodList();
+
+        const error = new HttpErrorResponse({ status:404 });
+        const outputAction = new GAPI_GetGoodListFailure({ error });
+
+        (storeMock.select as Spy).and.returnValue(of([]));
+        (gsMock.getList as Spy).and.returnValue(throwError(error));
+
+        actions = new ReplaySubject<ActionWithPayload>(1);
+        actions.next(inputAction);
+
+        effects.getGoodList$.subscribe((result:GAPI_GetGoodListFailure) => {
             expect(result instanceof GAPI_GetGoodListFailure).toBe(true);
             expect(result.payload.error).toBe(outputAction.payload.error);
             done();
