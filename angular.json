@@ -27,7 +27,8 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles.scss",
+                            "node_modules/materialize-css/extras/noUiSlider/noUiSlider.css"
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
@@ -44,7 +45,8 @@
                             "node_modules/materialize-css/js/tapTarget.js",
                             "node_modules/materialize-css/js/waves.js",
                             "node_modules/materialize-css/js/toasts.js",
-                            "node_modules/materialize-css/js/forms.js"
+                            "node_modules/materialize-css/js/forms.js",
+                            "node_modules/materialize-css/extras/noUiSlider/noUiSlider.js"
                         ]
                     },
                     "configurations": {

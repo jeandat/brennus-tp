@@ -1,0 +1,83 @@
+@import '_variables.scss';
+
+.search-form {
+    &-container {
+        margin-top: 1rem;
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        @media #{$small-and-down} {
+            flex-direction: column;
+            > * {
+                width: 100%;
+            }
+        }
+        .search-input-container {
+            flex: 1;
+            position: relative;
+        }
+        .search-input {
+            font-size: 2rem;
+            font-weight: 600;
+            padding: 0.7rem 0;
+            border-bottom: 4px solid map-get($brand-gray, '400');
+            &:focus {
+                border-bottom: 4px solid map-get($brand-gray, '400');
+                box-shadow: unset;
+            }
+        }
+        .search-icon,
+        .clear-icon {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+        .search-icon {
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+            i {
+                color: $accentuation-color;
+                font-size: 3rem;
+            }
+        }
+        .clear-icon {
+            color: $secondary-color;
+            background-color: $primary-color;
+            border-radius: 50%;
+            font-size: 2.5rem;
+            padding: 0.1rem;
+            cursor: pointer;
+        }
+        .min-quality {
+            &-filter {
+                margin-left: 3rem;
+                min-width: 250px;
+                label {
+                    display: block;
+                    margin: .9rem -5px;
+                    font-size: 1.3rem;
+                }
+                @media #{$small-and-down} {
+                    margin-top: 2rem;
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
+
+.goods-table-container {
+    margin: 4rem 0;
+    &.no-results {
+        .hint {
+            display: none;
+        }
+    }
+    .cell-template-wrapper {
+        position: relative;
+    }
+
+}

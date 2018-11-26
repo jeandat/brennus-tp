@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { LightRouterStateSerializer, metaReducers, reducers } from './store/core.reducer';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { GoodModule } from '../good/good.module';
 import { AuthModule } from '../auth/auth.module';
 
 
@@ -30,6 +31,7 @@ const components = [
         HttpClientModule,
         RouterModule,
         AuthModule,
+        GoodModule,
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         StoreRouterConnectingModule.forRoot({ stateKey:'router' }),

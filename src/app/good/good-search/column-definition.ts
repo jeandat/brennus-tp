@@ -1,9 +1,9 @@
 import { TemplateRef } from '@angular/core';
 import { TableColumnProp } from '@swimlane/ngx-datatable/release/types';
-import { RuleColumn } from '../../core/model/rule-infos.model';
+
 
 export interface ColumnDefinition {
-    id:RuleColumn;
+    id:string;
     name?:string;
     prop?:TableColumnProp;
     frozenLeft?:any;
