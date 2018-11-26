@@ -1,3 +1,15 @@
-<p>
-  statistic-list works!
-</p>
+<div class="container">
+    <h1>Good Statistics</h1>
+    <section>
+        <div>
+            <canvas baseChart *ngIf="barChartData.length"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="true"
+                    [chartType]="'bar'">
+            </canvas>
+        </div>
+    </section>
+</div>
+

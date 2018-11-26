@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatisticListComponent } from './statistic-list/statistic-list.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { ChartsModule } from 'ng2-charts';
 
 
 const components = [
@@ -13,7 +14,8 @@ const components = [
     declarations:[ ...components ],
     imports:[
         CommonModule,
-        AdminRoutingModule
+        AdminRoutingModule,
+        ChartsModule
     ],
     exports:[ ...components ]
 })

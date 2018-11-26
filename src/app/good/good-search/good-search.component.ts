@@ -60,6 +60,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
 
     // Utils
     // -----
+
     // Used to clear subscriptions
     private done:Subject<boolean> = new Subject();
 

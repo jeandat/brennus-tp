@@ -32,7 +32,7 @@ export class GoodEffects {
             return action.payload.criteria;
         }),
         switchMap((criteria:SearchCriteria) => {
-            this.ais.on('getGoodList$');
+            this.ais.on('filterGoodList$');
             return this.store.select(goodSelectors.selectAll).pipe(
                 first(),
                 switchMap((goods:Good[]) => {
@@ -59,7 +59,7 @@ export class GoodEffects {
             );
         }),
         tap(result => {
-            this.ais.off('getGoodList$');
+            this.ais.off('filterGoodList$');
             console.log('Action returned by effect:', result);
         })
     );
