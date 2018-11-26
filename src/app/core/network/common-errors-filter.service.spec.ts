@@ -2,10 +2,12 @@ import { HttpErrorResponse, HttpEvent, HttpHandler } from '@angular/common/http'
 import { HttpRequest } from '@angular/common/http/src/request';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { SnackBar } from '../snackbar/snackbar.service';
 import { CommonErrorsFilter } from './common-errors-filter.service';
+import { RouterTestingModule } from '@angular/router/testing';
 import Spy = jasmine.Spy;
+
 
 describe('CommonErrorsFilter', () => {
 
@@ -16,6 +18,7 @@ describe('CommonErrorsFilter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports:[ RouterTestingModule ],
             providers:[ CommonErrorsFilter, { provide:SnackBar, useValue:snackbar } ]
         }).compileComponents();
     });

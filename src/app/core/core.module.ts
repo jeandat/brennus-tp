@@ -5,6 +5,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { AuthModule } from '../auth/auth.module';
 
 
 const components = [
@@ -20,6 +21,7 @@ const components = [
         CommonModule,
         HttpClientModule,
         RouterModule
+        AuthModule,
     ],
     declarations:[
         ...components
