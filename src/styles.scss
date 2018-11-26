@@ -9,6 +9,7 @@
 @import '_variables.scss';
 @import '_global.scss';
 @import '_helpers.scss';
+@import '_form.scss';
 
 
 // Fonts
@@ -21,3 +22,9 @@
 // ---------------
 
 @import 'materialize/_index.scss';
+
+
+// NGX Datatable
+// -------------
+
+@import 'ngx-datatable/_index.scss';

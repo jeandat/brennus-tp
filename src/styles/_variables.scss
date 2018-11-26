@@ -42,7 +42,7 @@ $secondary-color: map-get($brand-gray, '1000');
 $accentuation-color: map-get($brand, 'yellow');
 
 $success-color: map-get($brand, 'green');
-$info-color: map-get($brand, 'purple');
+$info-color: map-get($brand, 'white');
 $warning-color: map-get($brand, 'yellow');
 $error-color: map-get($brand, 'red');
 
@@ -94,6 +94,7 @@ $padding-default: $padding-l;
 // Fonts
 $fallback-fonts: Roboto, "Helvetica Neue", Arial, sans-serif;
 $material-icons-font-path: '~material-icons/iconfont/';
+$ngx-datatable-font-path: '/assets/fonts/ngx-datatable/data-table';
 
 // Toasts
 $toast-text-size: 0.9rem;
