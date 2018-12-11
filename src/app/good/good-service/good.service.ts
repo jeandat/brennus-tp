@@ -16,7 +16,7 @@ export class GoodService {
 
     getList():Observable<Good[]> {
         return this.http.get<Good[]>(`${environment.apiUrl}/items/`).pipe(
-            // delay(3000)
+            delay(3000)
         );
     }
 
