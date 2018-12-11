@@ -55,42 +55,57 @@ npx source-map-explorer dist/brennus-tp/main.*.js dist/brennus-tp/main.*.js.map
 npx source-map-explorer dist/brennus-tp/styles.*.css dist/brennus-tp/styles.*.css.map
 ```
 
-
-## Possible optimisations
-
-### Material Design Icons
-
-#### What we do today
-
-Right now, we are using the simple solution with Materialize, i.e. we are importing the whole font with an @font-face instruction.
-The font is imported from [Material Icons] instead of [Material Design Icons] for quick npm installs.
-
-We can then reference any icon very elegantly like that:
-
-```html
-<i class="material-icons">add</i>
+Or simpler:
+```bash
+npm run stats:se --bundle=styles.*.css
 ```
 
-The solution is very simple and elegant but it has it cost:
+## Icons
 
-- the web font in its best optimised format (woff2) weight 44KB
+Icons are picked from [Material Design Icons]. But we are not using the default solution with the font icon cause it adds 44K and 800 icons when are using just a few.
 
-#### What we might do
+Instead we are generating an svg sprite in `src/assets/material-icons.svg` containing only icons we really need via:
 
-We could create an [SVG sprite] to compile and serve only icons we use:
+```bash
+npx gulp svg
+```
 
-- the weight would be much more lighter
-- we could work without an internet connection
+SVG files are referenced in `gulpfile.js`.
+
+In order to use an icon in a component template:
+
+```html
+<ba-svg-icon icon="menu"></ba-svg-icon>
+```
+
+With this solution it is also possible to use it directly without any wrapper:
+
+```html
+<svg class="svg-24px"><use xlink:href="material-icons.svg#ic_menu_24px"></use></svg>
+```
+
+This is a drop-in replacement for `<mat-icon>`.
+
+`<mat-icon>` is not used cause it doesn't handle nicely svg icons. It is a good pick for font icons though.
+
+Advantages:
+
+- the weight is much more lighter depending on the number of icons included
+- with the right build tools we could inline svg automatically and style specific parts if needed
+- icon is always perfect, no antialiasing problem nor size selection ([see this comment](https://github.com/google/material-design-icons/issues/582#issuecomment-287492782))
 
 Consequences:
 
-- usage will be less elegant with svg code: `<svg class="svg-24px"><use xlink:href="MaterialIcons.svg#ic_face_24px"></use></svg>`
 - a build task must be added to create the sprite
-- compatibility will reduce: Internet Explorer, Edge, and older Android and iOS browsers cannot use external svg files
+- the icon is not a font and thus doesn't inherit current text properties like font-size (the color is inherited though is you use the component)
+- compatibility will reduce: Internet Explorer, Edge, and older Android and iOS browsers cannot use external svg files. There is nonetheless a polyfill named [svg4everybody](https://github.com/jonathantneal/svg4everybody). More info in [Material Icons Guide].
 
-For now, I recommend to wait and observe our constraints before choosing a solution: browsers, connection, …
+## Possible optimisations
+
+TODO
 
 [SVG sprite]: https://github.com/google/material-design-icons/tree/master/sprites
 [Material Design Icons]: https://github.com/google/material-design-icons
+[Material Icons Guide]: http://google.github.io/material-design-icons/
 [Material Icons]: https://github.com/marella/material-icons
 

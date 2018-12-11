@@ -1,0 +1,15 @@
+var gulp     = require('gulp');
+var svgstore = require('gulp-svgstore');
+var rename   = require('gulp-rename');
+
+// Generate src/assets/material-icons.svg which is an SVG sprite
+gulp.task('svg', function() {
+    return gulp
+        .src([
+            './node_modules/material-design-icons/navigation/svg/production/ic_menu_24px.svg',
+            './node_modules/material-design-icons/action/svg/production/ic_search_24px.svg',
+        ])
+        .pipe(svgstore())
+        .pipe(rename('material-icons.svg'))
+        .pipe(gulp.dest('src/assets/'));
+});

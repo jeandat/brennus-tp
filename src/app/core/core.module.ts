@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
 import { AuthModule } from '../auth/auth.module';
 import { GoodModule } from '../good/good.module';
+import { SharedModule } from '../shared/shared.module';
 import { ActivityIndicatorComponent } from './activity-indicator/activity-indicator.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -33,6 +34,7 @@ const components = [
         RouterModule,
         AuthModule,
         GoodModule,
+        SharedModule, // Only truly used components will be inserted into the main bundle thanks to tree-shaking.
         StoreModule.forRoot(reducers, {metaReducers}),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         StoreRouterConnectingModule.forRoot({stateKey:'router'}),
