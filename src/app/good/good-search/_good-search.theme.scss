@@ -1,0 +1,26 @@
+@mixin good-search-theme($theme) {
+
+    $accent: map-get($theme, accent);
+
+    ba-good-search {
+        .search-form {
+            &-container {
+                .search-input {
+                    border-bottom: 4px solid mat-color($mat-gray, 400);
+                    &:focus {
+                        border-bottom: 4px solid mat-color($mat-gray, 400);
+                    }
+                }
+                .search-icon {
+                    i {
+                        color: mat-color($accent);
+                    }
+                }
+                .clear-icon {
+                    color: black;
+                    background-color: white;
+                }
+            }
+        }
+    }
+}

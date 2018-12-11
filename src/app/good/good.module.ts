@@ -8,12 +8,14 @@ import { GoodSearchComponent } from './good-search/good-search.component';
 import { FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+
 const components = [
     GoodSearchComponent
 ];
 
+
 @NgModule({
-    declarations:[...components],
+    declarations:[ ...components ],
     imports:[
         CommonModule,
         FormsModule,
@@ -21,6 +23,6 @@ const components = [
         EffectsModule.forFeature([ GoodEffects ]),
         NgxDatatableModule
     ],
-    exports:[...components]
+    exports:[ ...components ]
 })
 export class GoodModule {}

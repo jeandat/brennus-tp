@@ -3,13 +3,11 @@
 @charset "UTF-8";
 
 
-// Theme
+// Tools
 // -----
 
 @import '_variables.scss';
-@import '_global.scss';
 @import '_helpers.scss';
-@import '_form.scss';
 
 
 // Fonts
@@ -18,13 +16,7 @@
 @import '_fonts.scss';
 
 
-// Materialize CSS
-// ---------------
+// Angular Material Theme
+// ----------------------
 
-@import 'materialize/_index.scss';
-
-
-// NGX Datatable
-// -------------
-
-@import 'ngx-datatable/_index.scss';
+@import 'material/_index.scss';

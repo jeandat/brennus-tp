@@ -1,0 +1,478 @@
+@mixin ngx-datatable-core($typography-config) {
+
+    ba-root .no-results .ngx-datatable.material {
+        datatable-header,
+        datatable-footer {
+            display:none;
+        }
+    }
+
+    ba-root .ngx-datatable.material {
+        box-shadow:unset;
+
+        &.single-selection,
+        &.multi-selection,
+        &.multi-click-selection {
+            .datatable-body-row {
+                //&.active:hover,
+                //&.active:hover .datatable-row-group {
+                //    background-color: rgba(mat-color($warn), .1);
+                //    color: mat-color($mat-blue-gray, 800;
+                //}
+                //
+                //&.active:focus,
+                //&.active:focus .datatable-row-group {
+                //    background-color: rgba(mat-color($warn), .1);
+                //    color: mat-color($mat-blue-gray, 800;
+                //}
+            }
+        }
+
+        //&:not(.cell-selection) {
+        //    .datatable-body-row {
+        //        &:hover,
+        //        &:hover .datatable-row-group {
+        //            background-color: mat-color($mat-blue-gray, 50;
+        //            transition-property: background;
+        //            transition-duration: .3s;
+        //            transition-timing-function: linear;
+        //        }
+        //
+        //        &:focus,
+        //        &:focus .datatable-row-group {
+        //            background-color: map-get($brand-gray, '400');
+        //        }
+        //    }
+        //}
+
+        //&.cell-selection {
+        //    .datatable-body-cell {
+        //        &:hover,
+        //        &:hover .datatable-row-group {
+        //            background-color: mat-color($mat-blue-gray, 50;
+        //            transition-property: background;
+        //            transition-duration: .3s;
+        //            transition-timing-function: linear;
+        //        }
+        //
+        //        &:focus,
+        //        &:focus .datatable-row-group {
+        //            background-color: map-get($brand-gray, '400');
+        //        }
+        //
+        //        &.active,
+        //        &.active .datatable-row-group {
+        //            background-color: #304FFE;
+        //            color: white;
+        //        }
+        //
+        //        &.active:hover,
+        //        &.active:hover .datatable-row-group {
+        //            background-color: #193AE4;
+        //            color: white;
+        //        }
+        //
+        //        &.active:focus,
+        //        &.active:focus .datatable-row-group {
+        //            background-color: #2041EF;
+        //            color: white;
+        //        }
+        //    }
+        //}
+
+        /**
+         * Shared Styles
+         */
+        .empty-row {
+            height:50px;
+            text-align:center;
+            padding:1rem;
+            vertical-align:top;
+            border-top:0;
+            font-style:italic;
+            font-weight:600;
+            font-size:0.9rem;
+        }
+
+        .loading-row {
+            text-align:left;
+            padding:.5rem 1.2rem;
+            vertical-align:top;
+            border-top:0;
+        }
+
+        /**
+         * Global Row Styles
+         */
+        .datatable-header,
+        .datatable-body {
+            .datatable-row-left {
+                background-position:100% 0;
+                background-repeat:repeat-y;
+                background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
+            }
+
+            .datatable-row-right {
+                background-position:0 0;
+                background-repeat:repeat-y;
+                background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+            }
+
+            // Action columns
+            .datatable-header-cell,
+            .datatable-body-cell {
+                .checkbox-column {
+                    position:relative;
+                    left:-8px;
+                    [type="checkbox"]:checked + span:not(.lever):before {
+                        border-top-color:transparent;
+                        border-left-color:transparent;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Header Styles
+         */
+        .datatable-header {
+
+            .datatable-header-cell {
+                text-align:left;
+                padding:.9rem 1.2rem;
+                font-weight:400;
+                vertical-align:bottom;
+                font-size:1.2rem;
+
+                .resize-handle {
+                    cursor:auto;
+                }
+
+                &:last-child {
+                    border-right:unset;
+                }
+
+                .datatable-header-cell-wrapper {
+                    position:relative;
+                }
+
+                &.longpress {
+                    .draggable::after {
+                        transition:transform 400ms ease, opacity 400ms ease;
+                        opacity:.5;
+                        transform:scale(1);
+                    }
+                }
+
+                .draggable::after {
+                    content:" ";
+                    position:absolute;
+                    top:50%;
+                    left:50%;
+                    margin:-30px 0 0 -30px;
+                    height:60px;
+                    width:60px;
+                    border-radius:100%;
+                    opacity:1;
+                    filter:none;
+                    transform:scale(0);
+                    z-index:9999;
+                    pointer-events:none;
+                }
+
+                &.dragging {
+                    .resize-handle {
+                        border-right:none;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Body Styles
+         */
+        .datatable-body {
+
+            .datatable-row-detail {
+                padding:10px;
+            }
+
+            .datatable-body-row {
+
+                .datatable-body-cell {
+                    text-align:left;
+                    padding:.9rem 1.2rem;
+                    vertical-align:top;
+                    border-top:0;
+                    transition:width 0.3s ease;
+
+                    &:last-child {
+                        border-right:unset;
+                    }
+
+                    &:not(.no-truncate) {
+                        .datatable-body-cell-label {
+                            overflow:hidden;
+                            white-space:nowrap;
+                            text-overflow:ellipsis;
+                        }
+                    }
+
+                    // cell active class
+                    // &.active {
+                    //  background: #0829e0
+                    // }
+                }
+
+                .datatable-body-group-cell {
+                    text-align:left;
+                    padding:.9rem 1.2rem;
+                    vertical-align:top;
+                    border-top:0;
+                    transition:width 0.3s ease;
+                }
+            }
+
+            //.progress-linear {
+            //    display: block;
+            //    //position: relative;
+            //    width: 100%;
+            //    height: 5px;
+            //    padding: 0;
+            //    margin: 0;
+            //    position: absolute;
+            //
+            //    .container {
+            //        display: block;
+            //        position: relative;
+            //        overflow: hidden;
+            //        width: 100%;
+            //        height: 5px;
+            //        -webkit-transform: translate(0, 0) scale(1, 1);
+            //        transform: translate(0, 0) scale(1, 1);
+            //        background-color: rgb(170, 209, 249);
+            //
+            //        .bar {
+            //            transition: all .2s linear;
+            //            -webkit-animation: query .8s infinite cubic-bezier(.39, .575, .565, 1);
+            //            animation: query .8s infinite cubic-bezier(.39, .575, .565, 1);
+            //            transition: -webkit-transform .2s linear;
+            //            transition: transform .2s linear;
+            //            background-color: mat-color($warn);
+            //            position: absolute;
+            //            left: 0;
+            //            top: 0;
+            //            bottom: 0;
+            //            width: 100%;
+            //            height: 5px;
+            //        }
+            //    }
+            //}
+        }
+
+        /**
+         * Footer Styles
+         */
+        .datatable-footer {
+            font-size:12px;
+            overflow-x:auto;
+            white-space:nowrap;
+
+            //@media #{$small-and-down} {
+            //    margin-top: 1rem;
+            //}
+
+            .page-count {
+                line-height:50px;
+                height:50px;
+                padding:0 1.2rem;
+            }
+
+            .datatable-pager {
+                margin:0 10px;
+
+                li {
+                    vertical-align:middle;
+
+                    &.active a {
+                        font-weight:600;
+                    }
+                }
+
+                a {
+                    height:22px;
+                    min-width:24px;
+                    line-height:22px;
+                    padding:0 6px;
+                    border-radius:3px;
+                    margin:6px 3px;
+                    text-align:center;
+                    //vertical-align: top;
+                    text-decoration:none;
+                    vertical-align:bottom;
+
+                }
+
+                .datatable-icon-left,
+                .datatable-icon-skip,
+                .datatable-icon-right,
+                .datatable-icon-prev {
+                    font-size:20px;
+                    line-height:20px;
+                    padding:0 3px;
+                }
+            }
+        }
+
+        // Summary row styles
+        //.datatable-summary-row {
+        //    .datatable-body-row {
+        //        background-color: map-get($brand-gray, '400');
+        //
+        //        &:hover {
+        //            background-color: map-get($brand-gray, '400');
+        //        }
+        //
+        //        .datatable-body-cell {
+        //            font-weight: bold;
+        //        }
+        //    }
+        //}
+
+    }
+}
+
+@mixin ngx-datatable-theme($theme) {
+
+    $warn: map-get($theme, warn);
+
+    ba-root .ngx-datatable.material {
+        background:white;
+        border:1px solid mat-color($mat-blue-gray, 50);
+
+        &.striped {
+            .datatable-row-odd {
+                background:mat-color($mat-gray, 50);
+            }
+        }
+
+        &.single-selection,
+        &.multi-selection,
+        &.multi-click-selection {
+            .datatable-body-row {
+                &.active,
+                &.active .datatable-row-group {
+                    background-color:mat-color($warn, default, .1) !important;
+                    color:mat-color($mat-blue-gray, 800) !important;
+                }
+            }
+        }
+
+        .empty-row {
+            color:mat-color($mat-blue-gray, 300);
+        }
+
+        .datatable-header,
+        .datatable-body {
+            .datatable-row-left {
+                background-color:white;
+            }
+            .datatable-row-right {
+                background-color:white;
+            }
+            // Action columns
+            .datatable-header-cell,
+            .datatable-body-cell {
+                .checkbox-column {
+                    > span:before {
+                        border-color:mat-color($mat-blue-gray, 50);
+                    }
+                    [type="checkbox"]:checked + span:not(.lever):before {
+                        border-right-color:mat-color($mat-gray, 700);
+                        border-bottom-color:mat-color($mat-gray, 700);
+                    }
+                }
+            }
+        }
+
+        /**
+         * Header Styles
+         */
+        .datatable-header {
+            border-bottom:4px solid mat-color($mat-gray, 100);
+
+            .datatable-header-cell {
+                border-right:1px solid mat-color($mat-blue-gray, 50);
+                .draggable::after {
+                    background:mat-color($mat-blue-gray, 50);
+                }
+            }
+            .resize-handle {
+                border-right:solid 1px mat-color($mat-blue-gray, 50);
+            }
+        }
+
+        /**
+         * Body Styles
+         */
+        .datatable-body {
+
+            .datatable-row-detail {
+                background:mat-color($mat-gray, 100);
+            }
+
+            .datatable-group-header {
+                background:mat-color($mat-gray, 100);
+                border-bottom:solid 1px mat-color($mat-blue-gray, 100);
+                border-top:solid 1px mat-color($mat-blue-gray, 100);
+            }
+
+            .datatable-body-row {
+                border-bottom:2px solid mat-color($mat-gray, 50);
+                .datatable-body-cell {
+                    border-right:1px solid mat-color($mat-blue-gray, 50);
+                }
+            }
+        }
+
+        /**
+         * Footer Styles
+         */
+        .datatable-footer {
+            border-top:1px solid mat-color($mat-blue-gray, 50);
+            color:mat-color($mat-blue-gray, 100);
+
+            .datatable-pager {
+                li {
+                    &.disabled a {
+                        color:mat-color($mat-blue-gray, 50) !important;
+                        background-color:transparent !important;
+                    }
+                    &.active a {
+                        background-color:mat-color($warn,default, 0.2);
+                    }
+                }
+
+                a {
+                    color:rgba(0, 0, 0, .54);
+                    &:hover {
+                        background-color:mat-color($mat-blue-gray, 50, 0.2);
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+// Hamburgers menu icon
+// --------------------
+
+@import "~hamburgers/_sass/hamburgers/hamburgers.scss";
+
+@mixin hamburgers-core($typography-config){
+    .hamburger-box{
+        vertical-align: middle;
+    }
+}

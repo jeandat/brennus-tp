@@ -1,0 +1,112 @@
+
+// Custom color palettes
+// -----------------------------------------------------------------------------------------------------------------------------
+// Generator for custom palettes: http://mcg.mbitson.com/#!?yellow=%23f9b200&blue=%23185b76&red=%23b00020&themename=mcgtheme#%2F
+// Default palettes in material design: https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+// Tool to help select colors: https://material.io/tools/color/#!/?view.left=0&view.right=0
+// Tool to visualize your theme on angular material components: http://materialtheme.arcsine.org/
+
+// Custom red palette that overrides the default one
+// Base color used to generate the palette: #B00020
+$mat-red: (
+    50 : #f6e0e4,
+    100 : #e7b3bc,
+    200 : #d88090,
+    300 : #c84d63,
+    400 : #bc2641,
+    500 : #b00020,
+    600 : #a9001c,
+    700 : #a00018,
+    800 : #970013,
+    900 : #87000b,
+    A100 : #ffb3b6,
+    A200 : #ff8085,
+    A400 : #ff4d53,
+    A700 : #ff343b,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+// Custom blue palette that overrides the default one
+// Base color used to generate the palette: #185b76
+$mat-blue: (
+    50 : #e3ebef,
+    100 : #baced6,
+    200 : #8cadbb,
+    300 : #5d8c9f,
+    400 : #3b748b,
+    500 : #185b76,
+    600 : #15536e,
+    700 : #114963,
+    800 : #0e4059,
+    900 : #082f46,
+    A100 : #7cc8ff,
+    A200 : #49b2ff,
+    A400 : #169cff,
+    A700 : #0091fc,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+// Custom yellow palette that overrides the default one
+// Base color used to generate the palette: #f9b200
+$mat-yellow: (
+    50 : #fef6e0,
+    100 : #fde8b3,
+    200 : #fcd980,
+    300 : #fbc94d,
+    400 : #fabe26,
+    500 : #f9b200,
+    600 : #f8ab00,
+    700 : #f7a200,
+    800 : #f69900,
+    900 : #f58a00,
+    A100 : #ffffff,
+    A200 : #fff4e8,
+    A400 : #ffdbb5,
+    A700 : #ffce9c,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);

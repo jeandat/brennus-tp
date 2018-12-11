@@ -174,26 +174,26 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     }
 
     initializeSliders() {
-        setTimeout(() => {
-            const slider = noUiSlider.create(this.minQualitySlider.nativeElement, {
-                start:[ 0 ],
-                connect:true,
-                step:1,
-                orientation:'horizontal',
-                range:{
-                    min:0,
-                    max:50
-                },
-                format:wNumb({
-                    decimals:0
-                })
-            });
-            this.minQualitySlider.nativeElement.noUiSlider.on('change', ([ minQuality ]) => {
-                minQuality = !minQuality ? 0 : parseInt(minQuality, 10);
-                this.criteria.minQuality = minQuality;
-                this.onMinQualityChange.next(minQuality);
-            });
-        }, 0);
+        // setTimeout(() => {
+        //     const slider = noUiSlider.create(this.minQualitySlider.nativeElement, {
+        //         start:[ 0 ],
+        //         connect:true,
+        //         step:1,
+        //         orientation:'horizontal',
+        //         range:{
+        //             min:0,
+        //             max:50
+        //         },
+        //         format:wNumb({
+        //             decimals:0
+        //         })
+        //     });
+        //     this.minQualitySlider.nativeElement.noUiSlider.on('change', ([ minQuality ]) => {
+        //         minQuality = !minQuality ? 0 : parseInt(minQuality, 10);
+        //         this.criteria.minQuality = minQuality;
+        //         this.onMinQualityChange.next(minQuality);
+        //     });
+        // }, 0);
     }
 
 }

@@ -1,0 +1,17 @@
+
+// Typography configuration
+// ------------------------
+
+$typography-config: mat-typography-config(
+    $font-family:   $body-fonts,
+    $display-4:     mat-typography-level(112px, 112px, 300, $body-fonts),
+    $display-3:     mat-typography-level(56px, 56px, 300, $body-fonts),
+    $display-2:     mat-typography-level(45px, 48px, 300, $body-fonts),
+    $display-1:     mat-typography-level(34px, 40px, 300, $body-fonts),
+    $headline:      mat-typography-level(24px, 32px, 400, $title-fonts),
+    $title:         mat-typography-level(20px, 32px, 400, $title-fonts),
+    $subheading-2:  mat-typography-level(16px, 28px, 400, $title-fonts),
+    $subheading-1:  mat-typography-level(15px, 24px, 400, $title-fonts),
+    $body-1:        mat-typography-level(1rem, 1.25rem, 400),
+    $button:        mat-typography-level(14px, 14px, 400, $title-fonts)
+);

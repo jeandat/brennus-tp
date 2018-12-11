@@ -1,0 +1,22 @@
+@mixin navbar-theme($theme) {
+
+    $primary:map_get($theme, primary);
+    $accent:map_get($theme, accent);
+    $foreground:map-get($theme, foreground);
+    $background:map-get($theme, background);
+
+    ba-navbar {
+        border-bottom:2px solid map-get($foreground, divider);
+        a.active {
+            color:mat-color($accent);
+        }
+    }
+
+    @include media('<=xs') {
+        ba-navbar {
+            nav {
+                background-color:mat-color($background, app-bar);
+            }
+        }
+    }
+}

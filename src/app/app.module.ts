@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { GoodModule } from './good/good.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -14,7 +14,9 @@ import { GoodModule } from './good/good.module';
     imports:[
         BrowserModule,
         AppRoutingModule,
-        CoreModule
+        CoreModule,
+        NoopAnimationsModule
+        // BrowserAnimationsModule
     ],
     providers:[],
     bootstrap:[ AppComponent ]

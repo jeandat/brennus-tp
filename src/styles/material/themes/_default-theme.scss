@@ -1,0 +1,66 @@
+// Angular Material Theme
+// ----------------------
+
+// For each palette, you can optionally specify a default, lighter, and darker hue.
+// Available color palettes: https://material.io/design/color/
+// Custom color palettes: http://mcg.mbitson.com/#!?yellow=%23f9b200&blue=%23185b76&red=%23b00020&themename=mcgtheme#%2F
+
+$primary-palette:mat-palette($mat-blue);
+$accent-palette:mat-palette($mat-yellow);
+$warn-palette:mat-palette($mat-red);
+
+// Background palette for light themes.
+$mat-light-theme-background: (
+    status-bar: map_get($mat-grey, 300),
+    app-bar:    white,
+    background: map_get($mat-grey, 50),
+    hover:      rgba(black, 0.04),
+    card:       white,
+    dialog:     white,
+    disabled-button: rgba(black, 0.12),
+    raised-button: white,
+    focused-button: $dark-focused,
+    selected-button: map_get($mat-grey, 300),
+    selected-disabled-button: map_get($mat-grey, 400),
+    disabled-button-toggle: map_get($mat-grey, 200),
+    unselected-chip: map_get($mat-grey, 300),
+    disabled-list-option: map_get($mat-grey, 200),
+);
+
+// Foreground palette for light themes.
+$mat-light-theme-foreground: (
+    base:              black,
+    divider:           $dark-dividers,
+    dividers:          $dark-dividers,
+    disabled:          $dark-disabled-text,
+    disabled-button:   rgba(black, 0.26),
+    disabled-text:     $dark-disabled-text,
+    elevation:         black,
+    hint-text:         $dark-disabled-text,
+    secondary-text:    $dark-secondary-text,
+    icon:              mat-color($mat-gray, 900),
+    icons:             mat-color($mat-gray, 900),
+    text:              mat-color($mat-gray, 900),
+    slider-min:        rgba(black, 0.87),
+    slider-off:        rgba(black, 0.26),
+    slider-off-active: rgba(black, 0.38),
+);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$theme:mat-light-theme($primary-palette, $accent-palette, $warn-palette);
+
+
+
+.default-theme {
+
+    // Angular Material
+    @include custom-angular-material-theme($theme);
+
+    // App (core + components)
+    @include app-theme($theme);
+
+    // Other Libs
+    @include ngx-datatable-theme($theme);
+}
+
+

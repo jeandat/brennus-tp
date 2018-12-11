@@ -1,14 +1,14 @@
 <form #searchForm id="goods-search-form" class="search-form-container">
-    <div class="search-input-container">
-        <input #searchInput id="search-input" class="search-input" type="text" aria-label="Type your search here"
-               placeholder="Keywords…" autocomplete="off" [(ngModel)]="criteria.keywords" name="searchInput">
-        <button type="submit" class="search-icon" *ngIf="!searchInput.value"><i class="material-icons">search</i></button>
-        <i *ngIf="searchInput.value" class="material-icons clear-icon" (click)="clearSearchInput()">close</i>
-    </div>
-    <div class="range-field min-quality-filter">
-        <label for="min-quality-slider">Min quality</label>
-        <div #minQualitySlider id="min-quality-slider"></div>
-    </div>
+    <!--<div class="search-input-container">-->
+        <!--<input #searchInput id="search-input" class="search-input" type="text" aria-label="Type your search here"-->
+               <!--placeholder="Keywords…" autocomplete="off" [(ngModel)]="criteria.keywords" name="searchInput">-->
+        <!--<button type="submit" class="search-icon" *ngIf="!searchInput.value"><i class="material-icons">search</i></button>-->
+        <!--<i *ngIf="searchInput.value" class="material-icons clear-icon" (click)="clearSearchInput()">close</i>-->
+    <!--</div>-->
+    <!--<div class="range-field min-quality-filter">-->
+        <!--<label for="min-quality-slider">Min quality</label>-->
+        <!--<div #minQualitySlider id="min-quality-slider"></div>-->
+    <!--</div>-->
 </form>
 
 <div #goodsTableContainer class="goods-table-container no-results not-selectable">

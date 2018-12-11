@@ -1,20 +1,21 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { MatToolbarModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { ActivityIndicatorComponent } from './activity-indicator/activity-indicator.component';
-import { CommonErrorsFilter } from './network/common-errors-filter.service';
-import { StoreModule } from '@ngrx/store';
-import { environment } from '../../environments/environment';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { LightRouterStateSerializer, metaReducers, reducers } from './store/core.reducer';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { GoodModule } from '../good/good.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../../environments/environment';
 import { AuthModule } from '../auth/auth.module';
+import { GoodModule } from '../good/good.module';
+import { ActivityIndicatorComponent } from './activity-indicator/activity-indicator.component';
+import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CommonErrorsFilter } from './network/common-errors-filter.service';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { LightRouterStateSerializer, metaReducers, reducers } from './store/core.reducer';
 
 
 const components = [
@@ -32,10 +33,11 @@ const components = [
         RouterModule,
         AuthModule,
         GoodModule,
-        StoreModule.forRoot(reducers, { metaReducers }),
+        StoreModule.forRoot(reducers, {metaReducers}),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
-        StoreRouterConnectingModule.forRoot({ stateKey:'router' }),
-        EffectsModule.forRoot([])
+        StoreRouterConnectingModule.forRoot({stateKey:'router'}),
+        EffectsModule.forRoot([]),
+        MatToolbarModule
     ],
     declarations:[
         ...components
@@ -49,8 +51,8 @@ const components = [
         EffectsModule
     ],
     providers:[
-        { provide:HTTP_INTERCEPTORS, useClass:CommonErrorsFilter, multi:true },
-        { provide:RouterStateSerializer, useClass:LightRouterStateSerializer }
+        {provide:HTTP_INTERCEPTORS, useClass:CommonErrorsFilter, multi:true},
+        {provide:RouterStateSerializer, useClass:LightRouterStateSerializer}
     ]
 })
 export class CoreModule {
