@@ -17,7 +17,7 @@
         "test:watch": "ng test --karma-config src/karma.conf.js",
         "e2e": "ng e2e --port 4201",
         "prerelease": "npm ci && npm test && npm run e2e",
-        "release": "cross-var npm version $npm_package_new_version -m \"chore: Mark version v%s\"",
+        "release": "cross-var npm version $npm_config_new_version -m \"chore: Mark version v%s\"",
         "postrelease": "git push && git push --tags",
         "configure": "node src/conf/instrument.js",
         "check:conf": "node src/conf/check-conf.js",
