@@ -38,17 +38,17 @@ export class CommonErrorsFilter implements HttpInterceptor {
     }
 
     displayOffline() {
-        this.snackbar.show({ content:'Offline.', type:SnackBarType.Error });
+        this.snackbar.showError('Offline.');
         console.log('Generic error "offline" processed in http interceptor');
     }
 
     displayServiceDown() {
-        this.snackbar.show({ content:'Service temporarily down.', type:SnackBarType.Error });
+        this.snackbar.showError('Service temporarily down.');
         console.log('Generic error "servicedown" processed in http interceptor');
     }
 
     displayTimeOut() {
-        this.snackbar.show({ content:'Service timed out.', type:SnackBarType.Error });
+        this.snackbar.showError('Service timed out.');
         console.log('Generic error "timeout" processed in http interceptor');
     }
 

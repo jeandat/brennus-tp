@@ -1,25 +1,26 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GoodService } from '../good-service/good.service';
-import { fromEvent, merge, Observable, Subject } from 'rxjs';
-import { Good } from '../../core/model/good.model';
-import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppState } from '../../core/store/core.reducer';
 import { select, Store } from '@ngrx/store';
-import { SnackBar, SnackBarStategy, SnackBarType } from '../../core/snackbar/snackbar.service';
-import { goodSelectors } from '../store/good.selectors';
-import { debounceTime, distinctUntilKeyChanged, filter, first, map, startWith, takeUntil, tap } from 'rxjs/operators';
-import { BaHttpErrorResponse } from '../../core/network/ba-http-error-response';
-import { GSV_SetSearchFilters } from '../store/good.actions';
-import { SearchCriteria } from '../model/search-criteria.model';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { fromEvent, merge, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilKeyChanged, filter, first, map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
+import { Good } from '../../core/model/good.model';
+import { BaHttpErrorResponse } from '../../core/network/ba-http-error-response';
+import { SnackBar, SnackBarType } from '../../core/snackbar/snackbar.service';
+import { AppState } from '../../core/store/core.reducer';
+import { GoodService } from '../good-service/good.service';
+import { SearchCriteria } from '../model/search-criteria.model';
+import { GSV_SetSearchFilters } from '../store/good.actions';
+import { goodSelectors } from '../store/good.selectors';
 import { ColumnDefinition } from './column-definition';
 
 
 @Component({
     selector:'ba-good-search',
     templateUrl:'./good-search.component.html',
-    styleUrls:[ './good-search.component.scss' ]
+    styleUrls:['./good-search.component.scss']
 })
 export class GoodSearchComponent implements OnInit, OnDestroy {
 
@@ -27,9 +28,9 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     // -----------
 
     // DOM references
-    @ViewChild('searchInput', { read:ElementRef }) searchInput:ElementRef;
-    @ViewChild('minQualitySlider', { read:ElementRef }) minQualitySlider:ElementRef;
-    @ViewChild('searchForm', { read:ElementRef }) searchForm:ElementRef;
+    @ViewChild('searchInput', {read:ElementRef}) searchInput:ElementRef;
+    @ViewChild('minQualitySlider', {read:ElementRef}) minQualitySlider:ElementRef;
+    @ViewChild('searchForm', {read:ElementRef}) searchForm:ElementRef;
     // Current selected filters
     criteria = new SearchCriteria();
     goods$:Observable<Good[]>;
@@ -50,7 +51,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     footerHeight = 50;
     pageLimit = 50;
     // DOM References
-    @ViewChild('goodsTableContainer', { read:ElementRef }) goodsTableContainer:ElementRef;
+    @ViewChild('goodsTableContainer', {read:ElementRef}) goodsTableContainer:ElementRef;
     @ViewChild('datatable') datatable:DatatableComponent;
     // Columns definition
     columns:ColumnDefinition[];
@@ -70,7 +71,8 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
         private store:Store<AppState>,
         private router:Router,
         private route:ActivatedRoute,
-        private snackbar:SnackBar) {}
+        private snackbar:SnackBar) {
+    }
 
     ngOnInit() {
         this.listenToErrors();
@@ -108,17 +110,13 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
             takeUntil(this.done)
         ).subscribe(
             (err:BaHttpErrorResponse) => {
-                this.snackbar.show({
-                    content:'Server is temporarily unavailable',
-                    type:SnackBarType.Error,
-                    strategy:SnackBarStategy.FirstOne
-                });
+                this.snackbar.showError('Server is temporarily unavailable');
             }
         );
     }
 
     listenToSearchEvents() {
-        const onFormSubmission = fromEvent(this.searchForm.nativeElement, 'submit', { passive:true }).pipe(
+        const onFormSubmission = fromEvent(this.searchForm.nativeElement, 'submit', {passive:true}).pipe(
             tap((event:Event) => {
                 event.preventDefault();
                 console.log('Form submitted');
@@ -155,16 +153,16 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     setColumns() {
         if (!this.columns) {
             this.columns = [
-                { id:'name', name:'Name', minWidth:500, prop:'name' },
-                { id:'quality', name:'Quality', minWidth:150, prop:'quality' },
-                { id:'sellIn', name:'Time left (days)', minWidth:200, prop:'sellIn' },
-                { id:'type', name:'Type', minWidth:300, prop:'type' },
+                {id:'name', name:'Name', minWidth:500, prop:'name'},
+                {id:'quality', name:'Quality', minWidth:150, prop:'quality'},
+                {id:'sellIn', name:'Time left (days)', minWidth:200, prop:'sellIn'},
+                {id:'type', name:'Type', minWidth:300, prop:'type'},
             ];
         }
     }
 
     storeFilters(criteria:SearchCriteria) {
-        this.store.dispatch(new GSV_SetSearchFilters({ criteria:criteria.clone() }));
+        this.store.dispatch(new GSV_SetSearchFilters({criteria:criteria.clone()}));
         console.log('Search criteria updated in store');
     }
 

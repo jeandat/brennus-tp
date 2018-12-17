@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { MatToolbarModule } from '@angular/material';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -41,6 +41,7 @@ const components = [
         StoreRouterConnectingModule.forRoot({stateKey:'router'}),
         EffectsModule.forRoot([]),
         MatToolbarModule,
+        MatSnackBarModule,
         NgxLoadingModule.forRoot({
             animationType:ngxLoadingAnimationTypes.doubleBounce,
             backdropBackgroundColour:'transparent',
@@ -63,7 +64,7 @@ const components = [
     ],
     providers:[
         {provide:HTTP_INTERCEPTORS, useClass:CommonErrorsFilter, multi:true},
-        {provide:RouterStateSerializer, useClass:LightRouterStateSerializer}
+        {provide:RouterStateSerializer, useClass:LightRouterStateSerializer},
     ]
 })
 export class CoreModule {
