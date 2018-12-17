@@ -89,9 +89,7 @@
                                 "src/styles/"
                             ]
                         },
-                        "scripts": [
-                            "node_modules/materialize-css/dist/js/materialize.js"
-                        ],
+                        "scripts": [],
                         "assets": [
                             "src/favicon.ico",
                             "src/assets"
