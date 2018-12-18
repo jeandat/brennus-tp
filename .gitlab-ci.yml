@@ -21,6 +21,7 @@ build-angular:
         - npm run build:prod
     artifacts:
         name: $APP
+        expire_in: 1 week
         paths:
             - dist/$APP/
 
@@ -30,5 +31,6 @@ build-compodoc:
         - npm run compodoc
     artifacts:
         name: $APP-compodoc
+        expire_in: 1 week
         paths:
             - docs/compodoc/
