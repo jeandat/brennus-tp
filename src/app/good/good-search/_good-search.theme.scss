@@ -1,35 +1,15 @@
+
 @mixin good-search-theme($theme) {
+    ba-good-search{
 
-    $accent: map-get($theme, accent);
-
-    ba-good-search {
-        .search-form {
-            &-container {
-                .search-icon {
-                    i {
-                        color: mat-color($accent);
-                    }
-                }
-                .clear-icon {
-                    color: black;
-                    background-color: white;
-                }
-            }
-        }
     }
 }
 
 @mixin good-search-typography($typography-config) {
 
-    ba-good-search {
-        .search-form-container {
-            .search-input-container {
-                font-size:2rem;
-                font-weight:600;
-            }
-            .mat-form-field-label-wrapper {
-                font-weight:300;
-            }
+    ba-good-search{
+        .mat-form-field-label-wrapper {
+            font-weight:300;
         }
     }
 }

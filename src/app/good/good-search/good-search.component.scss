@@ -10,27 +10,12 @@
         .search-input-container {
             flex:1;
             position:relative;
-        }
-        .search-icon,
-        .clear-icon {
-            position:absolute;
-            right:1rem;
-            top:1rem;
+            font-size:2rem;
+            font-weight:600;
         }
         .search-icon {
-            cursor:pointer;
-            background:none;
-            border:none;
-            outline:none;
-            i {
-                font-size:3rem;
-            }
-        }
-        .clear-icon {
-            border-radius:50%;
-            font-size:2.5rem;
-            padding:0.1rem;
-            cursor:pointer;
+            width:2rem;
+            height:2rem;
         }
 
         .min-quality {
