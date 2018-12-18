@@ -1,4 +1,3 @@
-
 image: saddeveloper/node-chromium:latest
 
 variables:
@@ -24,3 +23,12 @@ build-angular:
         name: $APP
         paths:
             - dist/$APP/
+
+build-compodoc:
+    stage:build
+    script:
+        - npm run compodoc
+    artifacts:
+        name: $APP-compodoc
+        paths:
+            - docs/compodoc/
