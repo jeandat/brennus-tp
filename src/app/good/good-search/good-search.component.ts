@@ -30,7 +30,6 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     // DOM references
     @ViewChild('searchInput', {read:ElementRef}) searchInput:ElementRef;
     @ViewChild('minQualitySlider') minQualitySlider:MatSlider;
-    @ViewChild('searchForm', {read:ElementRef}) searchForm:ElementRef;
     // Current selected filters
     criteria = new SearchCriteria();
     goods$:Observable<Good[]>;
@@ -113,12 +112,8 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     }
 
     listenToSearchEvents() {
-        const onFormSubmission = fromEvent(this.searchForm.nativeElement, 'submit', {passive:true}).pipe(
-            tap((event:Event) => {
-                event.preventDefault();
-                console.log('Form submitted');
-            })
-        );
+        const onKeywordsChange = fromEvent(this.searchInput.nativeElement, 'input', {passive:true});
+        const onKeywordsClear = fromEvent(this.searchInput.nativeElement, 'blur', {passive:true});
 
         const onMinQualityChange = this.minQualitySlider.change.asObservable().pipe(
             tap(event => {
@@ -128,7 +123,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
             })
         );
 
-        merge(onFormSubmission, onMinQualityChange).pipe(
+        merge(onKeywordsChange, onKeywordsClear, onMinQualityChange).pipe(
             debounceTime(500),
             map(() => this.criteria.updateHash().clone()),
             distinctUntilKeyChanged('hash'),
