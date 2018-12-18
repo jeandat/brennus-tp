@@ -24,8 +24,11 @@
         "configure": "node src/conf/instrument.js",
         "check:conf": "node src/conf/check-conf.js",
         "check:push": "npm ci && npm run build:prod && npm test && npm run e2e",
-        "compodoc": "compodoc -p src/tsconfig.app.json -d public -n 'Brennus Analytics'",
-        "gen:svg-sprite": "gulp svg"
+        "compodoc": "compodoc -p src/tsconfig.app.json -d public/compodoc -n 'Brennus Analytics'",
+        "gitbook": "gitbook fetch && gitbook install && gitbook build . public",
+        "gen:docs": "npm run gitbook && npm run compodoc",
+        "gen:svg-sprite": "gulp svg",
+        "serve:docs": "npm run gen:docs && cd public && http-server"
     },
     "private": true,
     "dependencies": {
@@ -67,10 +70,12 @@
         "@types/node": "~8.9.4",
         "codelyzer": "~4.5.0",
         "cross-var": "^1.1.0",
+        "gitbook-cli": "^2.3.2",
         "gulp": "^3.9.1",
         "gulp-rename": "^1.4.0",
         "gulp-svgmin": "^2.1.0",
         "gulp-svgstore": "^7.0.0",
+        "http-server": "^0.11.1",
         "include-media": "^1.4.9",
         "jasmine-core": "~2.99.1",
         "jasmine-spec-reporter": "~4.2.1",

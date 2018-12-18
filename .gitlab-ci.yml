@@ -4,15 +4,15 @@ variables:
     APP: "brennus-tp"
 
 cache:
-    key: "${CI_PROJECT_ID}"
     paths:
-        - node_modules/
+        - node_modules
 
 before_script:
     - npm install
 
 stages:
     - build
+    - deploy
 
 # Build the project in production mode
 build-angular:
@@ -26,11 +26,12 @@ build-angular:
             - dist/$APP/
 
 pages:
+    stage: deploy
     script:
-        - npm run compodoc
+        - npm run gen:docs
     artifacts:
-        name: $APP-compodoc
         paths:
             - public
-        only:
-            - master
+        expire_in: 1 week
+    only:
+        - master # this job will affect only the 'master' branch

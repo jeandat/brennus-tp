@@ -6,6 +6,8 @@
 /out-tsc
 /src/environments/environment.ts
 /public
+/docs/compodoc
+/_book
 
 # dependencies
 /node_modules
