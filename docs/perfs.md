@@ -100,6 +100,15 @@ Consequences:
 - the icon is not a font and thus doesn't inherit current text properties like font-size (the color is inherited though is you use the component)
 - compatibility will reduce: Internet Explorer, Edge, and older Android and iOS browsers cannot use external svg files. There is nonetheless a polyfill named [svg4everybody](https://github.com/jonathantneal/svg4everybody). More info in [Material Icons Guide].
 
+A few remarks:
+
+- icons are downloaded directly from material design icons site and not installed via npm:
+    - it avoids us a slow download over network of the entire library
+    - it allows us to download the icon we need in the form and color we need directly without searching it in node_modules
+    - svg icons are downloaded in 24px size and put in `svg` folder
+    - the downloaded file should be renamed to respect `<ba-svg-icon>` convention name: `<name>-24px.svg`
+    - you can then declare it in `gulpfile.js` and generate again the sprite: `npm run gen:svg-sprite`
+
 ## Possible optimisations
 
 TODO

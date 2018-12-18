@@ -24,7 +24,8 @@
         "configure": "node src/conf/instrument.js",
         "check:conf": "node src/conf/check-conf.js",
         "check:push": "npm ci && npm run build:prod && npm test && npm run e2e",
-        "compodoc": "compodoc -p src/tsconfig.app.json -d docs/compodoc -n 'Brennus Analytics'"
+        "compodoc": "compodoc -p src/tsconfig.app.json -d docs/compodoc -n 'Brennus Analytics'",
+        "gen:svg-sprite": "gulp svg"
     },
     "private": true,
     "dependencies": {
@@ -48,7 +49,6 @@
         "core-js": "^2.5.4",
         "hamburgers": "^1.1.3",
         "hammerjs": "^2.0.8",
-        "material-design-icons": "^3.0.1",
         "ng2-charts": "^1.6.0",
         "ngx-loading": "^3.0.1",
         "rxjs": "~6.3.3",

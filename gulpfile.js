@@ -6,8 +6,7 @@ var rename   = require('gulp-rename');
 gulp.task('svg', function() {
     return gulp
         .src([
-            './node_modules/material-design-icons/navigation/svg/production/ic_menu_24px.svg',
-            './node_modules/material-design-icons/action/svg/production/ic_search_24px.svg',
+            'svg/**/*.svg',
         ])
         .pipe(svgstore())
         .pipe(rename('material-icons.svg'))
