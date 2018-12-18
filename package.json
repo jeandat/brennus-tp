@@ -24,7 +24,7 @@
         "configure": "node src/conf/instrument.js",
         "check:conf": "node src/conf/check-conf.js",
         "check:push": "npm ci && npm run build:prod && npm test && npm run e2e",
-        "compodoc": "compodoc -p src/tsconfig.app.json -d docs/compodoc -n 'Brennus Analytics'",
+        "compodoc": "compodoc -p src/tsconfig.app.json -d public -n 'Brennus Analytics'",
         "gen:svg-sprite": "gulp svg"
     },
     "private": true,

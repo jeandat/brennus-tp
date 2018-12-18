@@ -25,12 +25,12 @@ build-angular:
         paths:
             - dist/$APP/
 
-build-compodoc:
-    stage: build
+pages:
     script:
         - npm run compodoc
     artifacts:
         name: $APP-compodoc
-        expire_in: 1 week
         paths:
-            - docs/compodoc/
+            - public
+        only:
+            - master
