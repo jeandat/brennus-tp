@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule, MatInputModule, MatSliderModule } from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { goodReducer } from './store/good.reducer';
@@ -21,7 +22,10 @@ const components = [
         FormsModule,
         StoreModule.forFeature('goods', goodReducer),
         EffectsModule.forFeature([ GoodEffects ]),
-        NgxDatatableModule
+        NgxDatatableModule,
+        MatSliderModule,
+        MatFormFieldModule,
+        MatInputModule,
     ],
     exports:[ ...components ]
 })

@@ -1,14 +1,14 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSlider } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { fromEvent, merge, Observable, Subject } from 'rxjs';
+import { fromEvent, fromEventPattern, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged, filter, first, map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Good } from '../../core/model/good.model';
 import { BaHttpErrorResponse } from '../../core/network/ba-http-error-response';
-import { SnackBar, SnackBarType } from '../../core/snackbar/snackbar.service';
+import { SnackBar } from '../../core/snackbar/snackbar.service';
 import { AppState } from '../../core/store/core.reducer';
 import { GoodService } from '../good-service/good.service';
 import { SearchCriteria } from '../model/search-criteria.model';
@@ -29,7 +29,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
 
     // DOM references
     @ViewChild('searchInput', {read:ElementRef}) searchInput:ElementRef;
-    @ViewChild('minQualitySlider', {read:ElementRef}) minQualitySlider:ElementRef;
+    @ViewChild('minQualitySlider') minQualitySlider:MatSlider;
     @ViewChild('searchForm', {read:ElementRef}) searchForm:ElementRef;
     // Current selected filters
     criteria = new SearchCriteria();
@@ -55,8 +55,6 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     @ViewChild('datatable') datatable:DatatableComponent;
     // Columns definition
     columns:ColumnDefinition[];
-    // Observable fueled by the slider change events
-    private onMinQualityChange = new Subject<number>();
 
 
     // Utils
@@ -79,7 +77,6 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
         this.listenToSearchEvents();
         this.setColumns();
         this.setGoods();
-        this.initializeSliders();
         this.readCurrentCriteriaFromStore();
     }
 
@@ -123,7 +120,15 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
             })
         );
 
-        merge(onFormSubmission, this.onMinQualityChange).pipe(
+        const onMinQualityChange = this.minQualitySlider.change.asObservable().pipe(
+            tap(event => {
+                const minQuality = event.value || 0;
+                console.log('minQuality:', minQuality);
+                this.criteria.minQuality = minQuality;
+            })
+        );
+
+        merge(onFormSubmission, onMinQualityChange).pipe(
             debounceTime(500),
             map(() => this.criteria.updateHash().clone()),
             distinctUntilKeyChanged('hash'),
@@ -169,29 +174,6 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     clearSearchInput() {
         this.criteria.keywords = '';
         this.searchInput.nativeElement.focus();
-    }
-
-    initializeSliders() {
-        // setTimeout(() => {
-        //     const slider = noUiSlider.create(this.minQualitySlider.nativeElement, {
-        //         start:[ 0 ],
-        //         connect:true,
-        //         step:1,
-        //         orientation:'horizontal',
-        //         range:{
-        //             min:0,
-        //             max:50
-        //         },
-        //         format:wNumb({
-        //             decimals:0
-        //         })
-        //     });
-        //     this.minQualitySlider.nativeElement.noUiSlider.on('change', ([ minQuality ]) => {
-        //         minQuality = !minQuality ? 0 : parseInt(minQuality, 10);
-        //         this.criteria.minQuality = minQuality;
-        //         this.onMinQualityChange.next(minQuality);
-        //     });
-        // }, 0);
     }
 
 }

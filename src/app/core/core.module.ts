@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule, MatToolbarModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -33,6 +34,7 @@ const components = [
         CommonModule,
         HttpClientModule,
         RouterModule,
+        BrowserAnimationsModule,
         AuthModule,
         GoodModule,
         SharedModule, // Only truly used components will be inserted into the main bundle thanks to tree-shaking.
