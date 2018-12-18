@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import Toast = M.Toast;
-import ToastOptions = M.ToastOptions;
+import { ComponentType } from '@angular/cdk/portal';
+import { Injectable, TemplateRef } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material';
 
 export enum SnackBarType {
     Info = 'info',
@@ -11,35 +11,22 @@ export enum SnackBarType {
 
 export enum SnackBarStategy {
     FirstOne = 'firstOne', // Default One
-    // LastOne = 'lastOne',
-    OneByOne = 'oneByOne',
     AllIn = 'allIn'
 }
 
-export interface SnackBarShowOptions {
-    // Text or inline HTML inserted in the message zone.
-    content:string;
-    // If true, replace toast content entirely (no default template). Default: false.
-    raw?:boolean;
-    // Action button text. Default: ''
-    action?:string;
+export interface MatSnackBarConfigExtended extends MatSnackBarConfig {
+    // The length of time in milliseconds to wait before automatically dismissing the snack bar.
+    duration?:number;
     // Type of message: will impact colors. Default: SnackBarType.Info.
     type?:SnackBarType;
-    // Timeout in ms after which the snackbar is hidden. If 0, stay indefinitely until dismissed manually. Default: 4000.
-    displayLength?:number;
-    // Strategy
+    // Strategy regarding concurrency. What happens if several snackbar are opened while one is already visible?
     strategy?:SnackBarStategy;
-    // Toast instance
-    toast?:Toast;
 }
 
-export const defaultOptions:SnackBarShowOptions = {
-    content:'',
-    raw:false,
+export const defaultOptions:MatSnackBarConfigExtended = {
+    duration:4000,
     type:SnackBarType.Info,
-    displayLength:4000,
     strategy:SnackBarStategy.FirstOne,
-    toast:undefined
 };
 
 @Injectable({
@@ -47,89 +34,48 @@ export const defaultOptions:SnackBarShowOptions = {
 })
 export class SnackBar {
 
-    private stack:SnackBarShowOptions[] = [];
+    private ref:MatSnackBarRef<any>;
 
-    constructor() { }
+    constructor(private snackbar:MatSnackBar) {
+    }
 
-    // Show a snackbar which is like Material Design Snackbar component
-    // Use the Toast service behind the scene.
-    // Only one toast can be displayed at a time.
-    // If #show is called several times, calls are stacked by default, i.e. only one toast at at time (team synchronization).
-    // You can pass false to the stack parameter to play solo.
-    show(options:SnackBarShowOptions):Promise<boolean> {
+    mergeConf(config:MatSnackBarConfigExtended):MatSnackBarConfigExtended {
+        return Object.assign({}, defaultOptions, config);
+    }
 
-        options = Object.assign({}, defaultOptions, options);
+    open(message:string, action:string, config:MatSnackBarConfigExtended):MatSnackBarRef<any> {
+        config = this.mergeConf(config);
+        if (config.strategy === SnackBarStategy.FirstOne && this.ref) return;
+        this.ref = this.snackbar.open(message, action, config);
+        this.ref.afterDismissed().subscribe(() => this.ref = null);
+        return this.ref;
+    }
 
-        let resolved = false;
-        return new Promise<boolean>((resolve, reject) => {
+    showError(message:string) {
+        return this.open(message, null, {type:SnackBarType.Error});
+    }
 
-            // tslint:disable:prefer-const
-            let { content, raw, action, type, displayLength, strategy } = options;
+    showWarning(message:string) {
+        return this.open(message, null, {type:SnackBarType.Warning});
+    }
 
-            switch (strategy) {
-                // @ts-ignore
-                case SnackBarStategy.OneByOne:
-                    this.stack.push(options);
-                    // The next in line will be invoked once the current one has disappeared.
-                    if (this.stack.length > 1) return;
-                    break;
-                // @ts-ignore
-                case SnackBarStategy.FirstOne:
-                    if (this.stack.length === 0) this.stack.push(options);
-                    else return;
-                    break;
-                // case SnackBarStategy.LastOne:
-                //     const opts = this.stack.pop();
-                //     if (opts && opts.toast) opts.toast.dismiss();
-                //     this.stack = [ options ];
-                //     break;
-            }
+    showInfo(message:string) {
+        return this.open(message, null, {type:SnackBarType.Info});
+    }
 
-            // Materialize doesn't permit to keep a snackbar Indefinitely, so I'm simulating this with something very long…
-            if (displayLength === 0) {
-                displayLength = Number.POSITIVE_INFINITY;
-                // Force a close button or it would stay on screen indefinitely.
-                if (!action) action = 'DISMISS';
-            }
+    openFromComponent(component:ComponentType<any>, config:MatSnackBarConfigExtended):MatSnackBarRef<any> {
+        config = this.mergeConf(config);
+        if (config.strategy === SnackBarStategy.FirstOne && this.ref) return;
+        this.ref = this.snackbar.openFromComponent(component, config);
+        this.ref.afterDismissed().subscribe(() => this.ref = null);
+        return this.ref;
+    }
 
-            let html = '', actionTemplate = '', colorClass = `${type}-color`;
-
-            if (raw) {
-                html = `${content}`;
-            } else {
-                if (action) actionTemplate = `<button class="btn-flat toast-action ${colorClass}">${action}</button>`;
-                html = `<span>${content}</span>${actionTemplate}`;
-            }
-
-            let toast:Toast | any;
-
-            const toastOptions:ToastOptions | any = {
-                html,
-                classes:`snackbar snackbar--${type}`,
-                displayLength
-            };
-
-            // This callback is invoked once the toast is dismissed either naturally (timeout) or by clicking the action button.
-            toastOptions.completeCallback = () => {
-                this.stack.shift();
-                resolve(resolved);
-                if (this.stack.length) this.show(this.stack[ 0 ]);
-            };
-
-            // Add toast to DOM
-            toast = M.toast(toastOptions);
-
-            options.toast = toast;
-
-            if (action) {
-                // This callback is invoked when clicking the action button
-                // It will dismiss the toast
-                toast.el.querySelector('.toast-action').addEventListener('click', () => {
-                    resolved = true;
-                    toast.dismiss();
-                }, { passive:true });
-            }
-        });
-
+    openFromTemplate(template:TemplateRef<any>, config:MatSnackBarConfigExtended):MatSnackBarRef<any> {
+        config = this.mergeConf(config);
+        if (config.strategy === SnackBarStategy.FirstOne && this.ref) return;
+        this.ref = this.snackbar.openFromTemplate(template, config);
+        this.ref.afterDismissed().subscribe(() => this.ref = null);
+        return this.ref;
     }
 }

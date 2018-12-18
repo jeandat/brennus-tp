@@ -1,10 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { GoodModule } from './good/good.module';
 
 
 @NgModule({
@@ -14,9 +13,10 @@ import { GoodModule } from './good/good.module';
     imports:[
         BrowserModule,
         AppRoutingModule,
-        CoreModule
+        CoreModule,
     ],
     providers:[],
-    bootstrap:[ AppComponent ]
+    bootstrap:[AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

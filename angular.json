@@ -27,27 +27,14 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "node_modules/materialize-css/extras/noUiSlider/noUiSlider.css"
+                            "src/styles.scss"
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "src/styles/"
                             ]
                         },
-                        "scripts": [
-                            "node_modules/materialize-css/js/cash.js",
-                            "node_modules/materialize-css/js/global.js",
-                            "node_modules/materialize-css/js/anime.min.js",
-                            "node_modules/materialize-css/js/component.js",
-                            "node_modules/materialize-css/js/materialbox.js",
-                            "node_modules/materialize-css/js/sidenav.js",
-                            "node_modules/materialize-css/js/tapTarget.js",
-                            "node_modules/materialize-css/js/waves.js",
-                            "node_modules/materialize-css/js/toasts.js",
-                            "node_modules/materialize-css/js/forms.js",
-                            "node_modules/materialize-css/extras/noUiSlider/noUiSlider.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
@@ -102,9 +89,7 @@
                                 "src/styles/"
                             ]
                         },
-                        "scripts": [
-                            "node_modules/materialize-css/dist/js/materialize.js"
-                        ],
+                        "scripts": [],
                         "assets": [
                             "src/favicon.ico",
                             "src/assets"

@@ -1,62 +1,85 @@
-@import 'variables';
+@import '_variables.scss';
+
+
+:host {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:10;
+    overflow:visible;
+}
+
+.brand-logo {
+    margin-right:1rem;
+    display:flex;
+    align-items:center;
+    height:100%;
+    img {
+        height:3rem;
+    }
+}
 
 nav {
-    // Necessary to make z-index works properly.
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    overflow: hidden;
-    color: $navbar-font-color;
-    background-color: $navbar-bg-color;
-    .brand-logo {
-        margin-left: 1rem;
-        display: flex;
-        align-items: center;
-        height: 100%;
-        img {
-            height: 3rem;
-            @media #{$small-and-down} {
-                transform: scale(0.8);
+    z-index:1;
+    margin-left:1rem;
+    ul {
+        list-style:none;
+        li {
+            display:inline-block;
+            padding:1rem;
+            a {
+                width:100%;
+                height:100%;
+                display:block;
             }
         }
     }
 }
 
-#nav-desktop {
-    margin-left: 11rem;
-}
-
-.nav-link {
-    background-color: transparent !important;
-    &:hover {
-        color: $accentuation-color;
-        background-color: transparent;
-    }
-    &.active {
-        color: $accentuation-color;
-    }
-    a {
-        font-weight: bold;
-        color: inherit;
-        &:hover {
-            background-color: transparent;
+.hamburger {
+    z-index:2;
+    &-inner{
+        transition-duration: .25s;
+        transition-timing-function:cubic-bezier(0.805, 0.040, 0.270, 0.900);
+        width:32px;
+        &:before, &:after{
+            width:32px;
         }
     }
-    .sidenav & {
-        border-bottom: 1px solid map-get($brand-gray, '300');
-    }
-    .sidenav &:nth-child(2) {
-        border-top: 1px solid map-get($brand-gray, '300');
+}
+
+@include media('>xs') {
+    .hamburger {
+        display:none;
     }
 }
 
-.sidenav {
-    color: $sidenav-font-color;
-    background-color: $sidenav-bg-color;
-    &__header {
-        width: 100%;
-        height: 10rem;
-        background-color: map-get($brand, 'blue');
+@include media('<=xs') {
+    .brand-logo {
+        display:none;
+    }
+    nav {
+        width:100vw;
+        height:100vh;
+        top:0;
+        left:0;
+        margin:0;
+        position:fixed;
+        transform:translateY(100%);
+        transition:transform 250ms;
+        ul {
+            list-style:none;
+            text-align:center;
+            padding:0;
+
+            li {
+                display:block;
+                padding:1rem;
+            }
+        }
+        &.is-opened {
+            transform:translateY(0);
+        }
     }
 }

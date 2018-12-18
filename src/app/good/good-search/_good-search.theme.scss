@@ -1,0 +1,15 @@
+
+@mixin good-search-theme($theme) {
+    ba-good-search{
+
+    }
+}
+
+@mixin good-search-typography($typography-config) {
+
+    ba-good-search{
+        .mat-form-field-label-wrapper {
+            font-weight:300;
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Good } from '../../core/model/good.model';
 import { SearchCriteria } from '../model/search-criteria.model';
-import { tap } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -15,7 +15,9 @@ export class GoodService {
     constructor(private http:HttpClient) {}
 
     getList():Observable<Good[]> {
-        return this.http.get<Good[]>(`${environment.apiUrl}/items/`);
+        return this.http.get<Good[]>(`${environment.apiUrl}/items/`).pipe(
+            delay(3000)
+        );
     }
 
     filter(goods:Good[], criteria:SearchCriteria):Good[] {

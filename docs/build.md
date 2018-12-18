@@ -99,7 +99,7 @@ Obviously, the build and tests scripts must work before releasing anything. This
 Look at the `prerelease`, `release` and `postrelease` scripts to better understand what is going on.
 
 ```bash
-npm run release --new-version <x.x.x | major | minor | patch | premajor | preminor | prepatch>
+npm run release --new-version=<x.x.x | major | minor | patch | premajor | preminor | prepatch>
 ```
 
 Using the `release` script will:

@@ -1,13 +1,14 @@
-<form #searchForm id="goods-search-form" class="search-form-container">
-    <div class="search-input-container">
-        <input #searchInput id="search-input" class="search-input" type="text" aria-label="Type your search here"
-               placeholder="Keywords…" autocomplete="off" [(ngModel)]="criteria.keywords" name="searchInput">
-        <button type="submit" class="search-icon" *ngIf="!searchInput.value"><i class="material-icons">search</i></button>
-        <i *ngIf="searchInput.value" class="material-icons clear-icon" (click)="clearSearchInput()">close</i>
-    </div>
+<form id="goods-search-form" class="search-form-container">
+
+    <mat-form-field color="accent" class="search-input-container">
+        <mat-label>Keywords…</mat-label>
+        <input matInput #searchInput id="search-input" class="search-input" type="text" autocomplete="off" [(ngModel)]="criteria.keywords" name="searchInput">
+        <ba-svg-icon *ngIf="!searchInput.value" icon="search" matSuffix class="search-icon"></ba-svg-icon>
+        <ba-svg-icon *ngIf="searchInput.value" (click)="clearSearchInput()" icon="clear" matSuffix class="clear-icon"></ba-svg-icon>
+    </mat-form-field>
     <div class="range-field min-quality-filter">
         <label for="min-quality-slider">Min quality</label>
-        <div #minQualitySlider id="min-quality-slider"></div>
+        <mat-slider #minQualitySlider id="min-quality-slider" thumbLabel min="1" max="50"></mat-slider>
     </div>
 </form>
 

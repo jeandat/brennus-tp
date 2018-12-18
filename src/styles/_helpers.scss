@@ -1,7 +1,12 @@
-.flexbox {
+.flow {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    place-content:center center;
+    .column {
+        flex-direction:column;
+    }
+    .row {
+        flex-direction:row;
+    }
 }
 
 // Specific to touch devices
@@ -14,9 +19,14 @@
     }
 }
 
-.no-underline {
+.no-visited-decoration {
     &:hover,
     & a:hover {
         text-decoration: none !important;
+    }
+
+    &:visited,
+    & a:visited {
+        color: inherit;
     }
 }

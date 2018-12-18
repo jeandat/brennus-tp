@@ -1,0 +1,36 @@
+@import '~@angular/material/theming';
+
+@import '_colors.scss';
+@import '_typography.scss';
+
+
+// Include core styles for Angular Material using a custom typography configuration.
+// --------------------------------------------------------------------------------------------------------------------
+// If all themes share the same typography configuration, mat-core() must be called only once in the whole application.
+
+@include mat-core($typography-config);
+
+
+// Include core styles for app (layout + typography)
+// -------------------------------------------------
+
+@import "mixins/_app.scss";
+@import "../../app/core/navbar/_navbar.theme.scss";
+@import "../../app/core/activity-indicator/_activity-indicator.theme.scss";
+@import "../../app/good/good-search/_good-search.theme.scss";
+@include app-core($typography-config);
+
+
+// Include core styles for other libs (layout + typography)
+// --------------------------------------------------------
+
+@import "mixins/_libs.scss";
+@include ngx-datatable-core($typography-config);
+@include hamburgers-core($typography-config);
+
+
+// Themes
+// ----------------------------------------------------------
+// https://material.angular.io/guide/theming#multiple-themes
+@import "themes/_default-theme.scss";
+@import "themes/_dark-theme.scss";

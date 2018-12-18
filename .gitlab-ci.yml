@@ -1,0 +1,36 @@
+image: saddeveloper/node-chromium:latest
+
+variables:
+    APP: "brennus-tp"
+
+cache:
+    key: "${CI_PROJECT_ID}"
+    paths:
+        - node_modules/
+
+before_script:
+    - npm install
+
+stages:
+    - build
+
+# Build the project in production mode
+build-angular:
+    stage: build
+    script:
+        - npm run build:prod
+    artifacts:
+        name: $APP
+        expire_in: 1 week
+        paths:
+            - dist/$APP/
+
+build-compodoc:
+    stage: build
+    script:
+        - npm run compodoc
+    artifacts:
+        name: $APP-compodoc
+        expire_in: 1 week
+        paths:
+            - docs/compodoc/

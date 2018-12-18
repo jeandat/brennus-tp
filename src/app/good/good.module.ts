@@ -1,26 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule, MatInputModule, MatSliderModule } from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { SharedModule } from '../shared/shared.module';
 import { goodReducer } from './store/good.reducer';
 import { GoodEffects } from './store/good.effects';
 import { GoodSearchComponent } from './good-search/good-search.component';
 import { FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+
 const components = [
     GoodSearchComponent
 ];
 
+
 @NgModule({
-    declarations:[...components],
+    declarations:[ ...components ],
     imports:[
         CommonModule,
         FormsModule,
         StoreModule.forFeature('goods', goodReducer),
         EffectsModule.forFeature([ GoodEffects ]),
-        NgxDatatableModule
+        NgxDatatableModule,
+        MatSliderModule,
+        MatFormFieldModule,
+        MatInputModule,
+        SharedModule
     ],
-    exports:[...components]
+    exports:[ ...components ]
 })
 export class GoodModule {}

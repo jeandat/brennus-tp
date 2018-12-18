@@ -17,3 +17,5 @@ export function hash(s:string):number {
     }
     return h;
 }
+
+

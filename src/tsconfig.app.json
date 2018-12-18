@@ -1,13 +1,14 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "strictNullChecks": false,
-    "types": ["materialize-css"]
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts",
-    "src/conf/**"
-  ]
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../out-tsc/app",
+        "strictNullChecks": false,
+        "types": [
+        ]
+    },
+    "exclude": [
+        "test.ts",
+        "**/*.spec.ts",
+        "src/conf/**"
+    ]
 }

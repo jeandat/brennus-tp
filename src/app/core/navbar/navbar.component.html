@@ -1,0 +1,24 @@
+<mat-toolbar>
+    <div class="brand-logo">
+        <img src="/assets/brennus-logo.svg">
+    </div>
+    <button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
+        <span class="hamburger-box hamburger--squeeze" [ngClass]="{'is-active':menuOpened}" (click)="toggleMenu()">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+    <nav aria-label="root" [ngClass]="{'is-opened':menuOpened}" id="navigation">
+        <ul>
+            <li>
+                <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="/"
+                   class="no-visited-decoration">Home</a>
+            </li>
+            <li>
+                <a routerLinkActive="active" routerLink="/admin" class="no-visited-decoration">Admin</a>
+            </li>
+        </ul>
+    </nav>
+    <ba-activity-indicator></ba-activity-indicator>
+</mat-toolbar>
+
+
