@@ -12,8 +12,7 @@ import Spy = jasmine.Spy;
 describe('CommonErrorsFilter', () => {
 
     let service:CommonErrorsFilter;
-    const snackbar = {} as SnackBar;
-    snackbar.show = jasmine.createSpy('show');
+    const snackbar = jasmine.createSpyObj('SnackBar', ['showError']) as SnackBar;
     const createErrorResponse = (status) => ({ status } as HttpErrorResponse);
 
     beforeEach(() => {
@@ -25,7 +24,7 @@ describe('CommonErrorsFilter', () => {
 
     beforeEach(() => {
         service = TestBed.get(CommonErrorsFilter);
-        (snackbar.show as Spy).calls.reset();
+        (snackbar.showError as Spy).calls.reset();
     });
 
     it('should process a timeout error', fakeAsync(() => {
@@ -35,8 +34,8 @@ describe('CommonErrorsFilter', () => {
         service.intercept(request, next).subscribe(
             () => fail('should have timed out'),
             () => {
-                expect(snackbar.show).toHaveBeenCalled();
-                expect((snackbar.show as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError).toHaveBeenCalled();
+                expect((snackbar.showError as Spy).calls.count()).toBe(1);
             }
         );
         tick(35000);
@@ -49,8 +48,8 @@ describe('CommonErrorsFilter', () => {
         service.intercept(request, next).subscribe(
             () => fail('should have failed w/ 504 error code'),
             () => {
-                expect(snackbar.show).toHaveBeenCalled();
-                expect((snackbar.show as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError).toHaveBeenCalled();
+                expect((snackbar.showError as Spy).calls.count()).toBe(1);
             }
         );
         tick(35000);
@@ -63,8 +62,8 @@ describe('CommonErrorsFilter', () => {
         service.intercept(request, next).subscribe(
             () => fail('should have failed w/ 503 error code'),
             () => {
-                expect(snackbar.show).toHaveBeenCalled();
-                expect((snackbar.show as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError).toHaveBeenCalled();
+                expect((snackbar.showError as Spy).calls.count()).toBe(1);
             }
         );
         tick(35000);
@@ -77,8 +76,8 @@ describe('CommonErrorsFilter', () => {
         service.intercept(request, next).subscribe(
             () => fail('should have failed w/ 0 error code'),
             () => {
-                expect(snackbar.show).toHaveBeenCalled();
-                expect((snackbar.show as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError).toHaveBeenCalled();
+                expect((snackbar.showError as Spy).calls.count()).toBe(1);
             }
         );
         tick(35000);
