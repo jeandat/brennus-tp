@@ -65,6 +65,8 @@ export class GoodEffects {
             console.log(`Intercepted action of type '${action.type}' with payload:`, action.payload);
             return action.payload.criteria;
         }),
+        // False positive
+        // tslint:disable rxjs-no-unsafe-switchmap
         switchMap((criteria:SearchCriteria) => {
             this.ais.on('filterGoodList$');
             return this.store.select(goodSelectors.selectAll).pipe(
