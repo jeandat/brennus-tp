@@ -23,7 +23,7 @@
         "postrelease": "git push && git push --tags",
         "configure": "node src/conf/instrument.js",
         "check:conf": "node src/conf/check-conf.js",
-        "check:push": "npm ci && npm run build:prod && npm test && npm run e2e",
+        "check:ci": "npm ci && npm run build:prod && npm test && npm run e2e",
         "compodoc": "compodoc -p src/tsconfig.app.json -d public/compodoc -n 'Brennus Analytics'",
         "gitbook": "gitbook fetch && gitbook install && gitbook build . public",
         "gen:docs": "npm run gitbook && npm run compodoc",

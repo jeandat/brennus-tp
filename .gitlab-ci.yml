@@ -12,6 +12,7 @@ before_script:
 
 stages:
     - build
+    - test
     - deploy
 
 # Build the project in production mode
@@ -24,6 +25,17 @@ build-angular:
         expire_in: 1 week
         paths:
             - dist/$APP/
+
+test-angular:
+    stage: test
+    script:
+        - npm run check:ci
+    artifacts:
+        name: coverage
+        paths:
+            - coverage/
+        expire_in: 1 week
+
 
 pages:
     stage: deploy
