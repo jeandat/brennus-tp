@@ -1,4 +1,4 @@
-image: saddeveloper/node-chromium:latest
+image: colthreepv/node-chrome:10
 
 variables:
     APP: "brennus-tp"
