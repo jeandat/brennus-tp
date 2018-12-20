@@ -1,0 +1,18 @@
+@mixin snackbar-theme($theme) {
+
+    .snackbar {
+        &-error {
+            color:mat-color($mat-red, A700);
+        }
+        &-warning {
+            color:mat-color($mat-lime, A200);
+        }
+        &-info {
+            color:white;
+        }
+        &-success {
+            color:mat-color($mat-green, A200);
+        }
+    }
+
+}

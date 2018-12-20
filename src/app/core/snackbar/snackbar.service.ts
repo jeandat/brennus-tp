@@ -40,7 +40,9 @@ export class SnackBar {
     }
 
     mergeConf(config:MatSnackBarConfigExtended):MatSnackBarConfigExtended {
-        return Object.assign({}, defaultOptions, config);
+        const newConfig = Object.assign({}, defaultOptions, config);
+        newConfig.panelClass = 'snackbar-' + newConfig.type;
+        return newConfig;
     }
 
     open(message:string, action:string, config:MatSnackBarConfigExtended):MatSnackBarRef<any> {
@@ -61,6 +63,10 @@ export class SnackBar {
 
     showInfo(message:string) {
         return this.open(message, null, {type:SnackBarType.Info});
+    }
+
+    showSuccess(message:string) {
+        return this.open(message, null, {type:SnackBarType.Success});
     }
 
     openFromComponent(component:ComponentType<any>, config:MatSnackBarConfigExtended):MatSnackBarRef<any> {

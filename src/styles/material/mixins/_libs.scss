@@ -40,6 +40,11 @@
 }
 
 
+@mixin libs-theme($theme) {
+    @include ngx-datatable-theme($theme);
+}
+
+
 // NGX Datatable
 // -------------
 

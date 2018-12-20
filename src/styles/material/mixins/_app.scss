@@ -71,5 +71,6 @@
     @include app-core-theme($theme);
     @include navbar-theme($theme);
     @include activity-indicator-theme($theme);
+    @include snackbar-theme($theme);
     @include good-search-theme($theme);
 }

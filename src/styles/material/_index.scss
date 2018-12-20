@@ -17,6 +17,7 @@
 @import "mixins/_app.scss";
 @import "../../app/core/navbar/_navbar.theme.scss";
 @import "../../app/core/activity-indicator/_activity-indicator.theme.scss";
+@import "../../app/core/snackbar/_snackbar.theme.scss";
 @import "../../app/good/good-search/_good-search.theme.scss";
 @include app-core($typography-config);
 

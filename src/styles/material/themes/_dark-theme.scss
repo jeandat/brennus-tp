@@ -60,7 +60,7 @@ $theme:mat-dark-theme($primary-palette, $accent-palette, $warn-palette);
     @include app-theme($theme);
 
     // Other Libs
-    @include ngx-datatable-theme($theme);
+    @include libs-theme($theme);
 }
 
 
