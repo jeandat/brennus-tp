@@ -65,7 +65,8 @@ You can also use `ng generate directive|pipe|service|class|guard|interface|enum|
 
 ### Running unit tests
 
-Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm test` to execute unit tests via [Karma] in watch mode (dev).
+Run `npm run test:ci` to execute unit tests via [Karma] in single run mode (ci).
 
 ### Running end-to-end tests
 
@@ -113,3 +114,6 @@ Using the `release` script will:
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+[Karma]: https://karma-runner.github.io

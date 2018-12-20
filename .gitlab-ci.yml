@@ -1,4 +1,4 @@
-image: colthreepv/node-chrome:10
+image: node:10
 
 variables:
     APP: "brennus-tp"
@@ -8,6 +8,12 @@ cache:
         - node_modules
 
 before_script:
+    - apt-get update
+    - apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+    - node -v
+    - npm -v
+    - which node
+    - which npm
     - npm install
 
 stages:
@@ -26,6 +32,8 @@ build-angular:
         paths:
             - dist/$APP/
 
+
+# Run unit tests and e2e tests
 test-angular:
     stage: test
     script:
@@ -37,6 +45,8 @@ test-angular:
         expire_in: 1 week
 
 
+# Gitlab pages
+# Doesn't work for projects in a sub-group though
 pages:
     stage: deploy
     script:
