@@ -111,6 +111,25 @@ Using the `release` script will:
 4. create a commit and tag on current branch
 5. push commits and tags to origin
 
+## Generating docs
+
+For those interested, a gitbook is generated with the `docs/` content. 
+
+The readme also points to a compodoc generated documentation which might help newcomers to the project.
+
+To test locally:
+
+```bash
+npm run serve:docs
+```
+
+To generate docs in a `public` folder:
+
+```bash
+npm run gen:docs
+```
+
+
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
