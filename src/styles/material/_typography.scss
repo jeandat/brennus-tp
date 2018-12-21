@@ -4,14 +4,14 @@
 
 $typography-config: mat-typography-config(
     $font-family:   $body-fonts,
-    $display-4:     mat-typography-level(112px, 112px, 300, $body-fonts),
-    $display-3:     mat-typography-level(56px, 56px, 300, $body-fonts),
-    $display-2:     mat-typography-level(45px, 48px, 300, $body-fonts),
-    $display-1:     mat-typography-level(34px, 40px, 300, $body-fonts),
-    $headline:      mat-typography-level(24px, 32px, 400, $title-fonts),
-    $title:         mat-typography-level(20px, 32px, 400, $title-fonts),
-    $subheading-2:  mat-typography-level(16px, 28px, 400, $title-fonts),
-    $subheading-1:  mat-typography-level(15px, 24px, 400, $title-fonts),
-    $body-1:        mat-typography-level(1rem, 1.25rem, 400),
-    $button:        mat-typography-level(14px, 14px, 400, $title-fonts)
+    $display-4:     mat-typography-level(7rem, 7rem, 300, $body-fonts),         // Large, one-off header
+    $display-3:     mat-typography-level(3.5rem, 3.5rem, 300, $body-fonts),     // Large, one-off header
+    $display-2:     mat-typography-level(2.81rem, 3rem, 300, $body-fonts),      // Large, one-off header
+    $display-1:     mat-typography-level(2.12rem, 2.5rem, 300, $body-fonts),    // Large, one-off header
+    $headline:      mat-typography-level(3rem, 5rem, 800, $title-fonts),     // h1
+    $title:         mat-typography-level(1.25rem, 2rem, 400, $title-fonts),     // h2
+    $subheading-2:  mat-typography-level(1rem, 1.75rem, 400, $title-fonts),     // h3
+    $subheading-1:  mat-typography-level(0.93rem, 1.5rem, 400, $title-fonts),   // h4
+    $body-1:        mat-typography-level(1rem, 1.25rem, 400),                   // Base body text.
+    $button:        mat-typography-level(0.87rem, 0.87rem, 400, $title-fonts)   // Buttons and anchors.
 );
