@@ -15,7 +15,7 @@
         "stats": "npm run build:stats && npm run stats:wba",
         "lint": "ng lint --format stylish",
         "pretest": "npm run check:conf",
-        "test": "ng test",
+        "test": "ng test --browsers=Chrome",
         "test:ci": "ng test --code-coverage --watch=false --progress=false --browsers=HeadlessChrome",
         "e2e": "ng e2e --port 4201",
         "prerelease": "npm run check:ci",
