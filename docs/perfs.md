@@ -3,7 +3,7 @@
 
 ## Analysing bundles content
 
-There is two tools in dev dependencies that may help analyse and understand what is encapsulated in each bundle.
+There is three tools in dev dependencies that may help analyse and understand what is encapsulated in each bundle.
 
 You need first to build in production mode with some flags on to generate a few statistics:
 
@@ -30,13 +30,13 @@ A few notes:
 - Tree map is zoomable
 
 ```bash
-# Show a global tree map including all bundles
-npx webpack-bundle-analyzer dist/brennus-tp/stats.json
+npm run stats:wba
 ```
 
-As a shortcut for WBA, you can run:
+As webpack-bundle-analyser is the most used tool, you can generate statistics and launch WBA in one command with:
 
 ```bash
+# Shorcut
 npm run stats
 ```
 
@@ -49,15 +49,18 @@ More or less like webpack-bundle-analyzer except that:
 - it gives you an incremental percentage value per level of encapsulation
 
 ```bash
-npx source-map-explorer dist/brennus-tp/main.*.js dist/brennus-tp/main.*.js.map
+npm run stats:se --bundle=dist/*/styles.*.js
 
-# Works with css too
-npx source-map-explorer dist/brennus-tp/styles.*.css dist/brennus-tp/styles.*.css.map
+# Works also with CSS
+npm run stats:se --bundle=dist/*/styles.*.css
 ```
 
-Or simpler:
+### bundle-buddy
+
+Complementary tool that can help find duplicate codes between bundles.
+
 ```bash
-npm run stats:se --bundle=styles.*.css
+npm run stats:bb
 ```
 
 ## Icons
