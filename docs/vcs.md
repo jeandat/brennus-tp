@@ -19,7 +19,7 @@ footer
     - `docs` - changes to docs, e.g. `docs(api.md): ..` to change documentation.
     - `test` - changes to tests infrastructure.
     - `refactor` - refactoring production code, eg. renaming a variable
-    - `style` - code style: spaces/alignment/wrapping etc.
+    - `style` - code style: spaces/alignment/wrapping/cleaned imports etc.
     - `chore` - build-related work, e.g. docker / gitlab / npm / etc.
 2. *namespace* is put in parenthesis after label and is optional.
 3. *title* is a brief summary of changes.

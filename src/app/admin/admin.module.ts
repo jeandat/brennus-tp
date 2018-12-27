@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatisticListComponent } from './statistic-list/statistic-list.component';
-import { AdminRoutingModule } from './admin-routing.module';
+import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
+import { AdminRoutingModule } from './admin-routing.module';
+import { StatisticListComponent } from './statistic-list/statistic-list.component';
 
 
 const components = [
@@ -11,12 +11,13 @@ const components = [
 
 
 @NgModule({
-    declarations:[ ...components ],
+    declarations:[...components],
     imports:[
         CommonModule,
         AdminRoutingModule,
-        ChartsModule
+        ChartsModule,
     ],
-    exports:[ ...components ]
+    exports:[...components]
 })
-export class AdminModule {}
+export class AdminModule {
+}

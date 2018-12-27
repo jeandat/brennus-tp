@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { goodSelectors } from '../../good/store/good.selectors';
+import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Good } from '../../core/model/good.model';
-import { Observable, Subject } from 'rxjs';
 import { AppState } from '../../core/store/core.reducer';
 import { SLV_GetGoodList } from '../../good/store/good.actions';
+import { goodSelectors } from '../../good/store/good.selectors';
 
 
 @Component({
     selector:'ba-statistic-list',
     templateUrl:'./statistic-list.component.html',
-    styleUrls:[ './statistic-list.component.scss' ]
+    styleUrls:['./statistic-list.component.scss']
 })
 export class StatisticListComponent implements OnInit, OnDestroy {
 
@@ -23,7 +23,7 @@ export class StatisticListComponent implements OnInit, OnDestroy {
     // Chart properties
     // ----------------
 
-    public barChartOptions = { scaleShowVerticalLines:false, responsive:true };
+    public barChartOptions = {scaleShowVerticalLines:false, responsive:true};
     public barChartLabels = [];
     public barChartData = [];
 
@@ -33,7 +33,8 @@ export class StatisticListComponent implements OnInit, OnDestroy {
     // Used to clear subscriptions
     private done:Subject<boolean> = new Subject();
 
-    constructor(private store:Store<AppState>) {}
+    constructor(private store:Store<AppState>) {
+    }
 
     ngOnInit():void {
         this.setGoods();
@@ -78,8 +79,8 @@ export class StatisticListComponent implements OnInit, OnDestroy {
 
                 // Change current chart data
                 this.barChartData = [
-                    { data:counts, label:'Count' },
-                    { data:averages, label:'Average Quality' }
+                    {data:counts, label:'Count'},
+                    {data:averages, label:'Average Quality'}
                 ];
             })
         );
