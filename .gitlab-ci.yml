@@ -52,6 +52,7 @@ pages:
     script:
         - npm run gen:docs
     artifacts:
+        name: "pages"
         paths:
             - public
         expire_in: 1 week

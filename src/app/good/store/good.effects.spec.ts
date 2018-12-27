@@ -1,13 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Action, Store } from '@ngrx/store';
+import { Action, Store, StoreModule } from '@ngrx/store';
 import { of, ReplaySubject, throwError } from 'rxjs';
+import { activityIndicatorServiceStub } from '../../../testing/activity-indicator-service.stub';
+import { goodServiceStub } from '../../../testing/good-service.stub';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
-import { ActionWithPayload, AppState } from '../../core/store/core.reducer';
 import { Good } from '../../core/model/good.model';
-import { GoodEffects } from './good.effects';
+import { ActionWithPayload } from '../../core/store/core.reducer';
 import { GoodService } from '../good-service/good.service';
+import { SearchCriteria } from '../model/search-criteria.model';
 import {
     GAPI_GetGoodListFailure,
     GAPI_GetGoodListSuccess,
@@ -15,49 +17,57 @@ import {
     GSVC_SetSearchResults,
     SLV_GetGoodList
 } from './good.actions';
-import { SearchCriteria } from '../model/search-criteria.model';
+import { GoodEffects } from './good.effects';
+import { goodReducer, GoodState } from './good.reducer';
 import Spy = jasmine.Spy;
+import SpyObj = jasmine.SpyObj;
 
 
-const mocks = [ { id:'1', name:'foo' }, { id:'2', name:'bar' }, { id:'3', name:'baz' } ] as Good[];
+const mocks = [{id:'1', name:'foo'}, {id:'2', name:'bar'}, {id:'3', name:'baz'}] as Good[];
 
 describe('Good Effects', () => {
 
+    let store:Store<GoodState>;
     let effects:GoodEffects;
+    let goodService:SpyObj<GoodService>;
     let actions:ReplaySubject<ActionWithPayload>;
-
-    const gsMock = jasmine.createSpyObj('GoodService', [ 'filter', 'getList' ]) as GoodService;
-    const aisMock = jasmine.createSpyObj('ActivityIndicatorService', [ 'on', 'off' ]) as ActivityIndicatorService;
-    const storeMock = jasmine.createSpyObj('Store', [ 'select', 'dispatch' ]) as Store<AppState>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports:[],
+            imports:[
+                StoreModule.forRoot({goods:goodReducer}),
+            ],
             providers:[
                 GoodEffects,
                 provideMockActions(() => actions),
-                { provide:GoodService, useValue:gsMock },
-                { provide:ActivityIndicatorService, useValue:aisMock },
-                { provide:Store, useValue:storeMock }
+                {provide:GoodService, useValue:goodServiceStub},
+                {provide:ActivityIndicatorService, useValue:activityIndicatorServiceStub}
             ]
         });
 
         effects = TestBed.get(GoodEffects);
+        store = TestBed.get(Store);
+        spyOn(store, 'dispatch').and.callThrough();
+        goodService = TestBed.get(GoodService);
+        actions = new ReplaySubject<ActionWithPayload>(1);
     });
 
     it('should filter goods with goods from store', (done) => {
+
+        // Input
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
-        const inputAction = new GSV_SetSearchFilters({ criteria });
+        const inputAction = new GSV_SetSearchFilters({criteria});
 
+        // Output
         const filteredGoods = mocks.filter(mock => mock.name === criteria.keywords);
-        const outputAction = new GSVC_SetSearchResults({ goods:filteredGoods });
+        const outputAction = new GSVC_SetSearchResults({goods:filteredGoods});
 
-        (storeMock.select as Spy).and.returnValue(of(mocks));
-        // (gsMock.getList as Spy).and.returnValue(of(mocks));
-        (gsMock.filter as Spy).and.returnValue(filteredGoods);
+        // Set context
+        store.dispatch(new GAPI_GetGoodListSuccess({goods:mocks}));
+        goodService.filter.and.returnValue(filteredGoods);
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
         effects.filterGoodList$.subscribe((result:GSVC_SetSearchResults) => {
@@ -68,18 +78,21 @@ describe('Good Effects', () => {
     });
 
     it('should filter goods with goods from API', (done) => {
+
+        // Input
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
-        const inputAction = new GSV_SetSearchFilters({ criteria });
+        const inputAction = new GSV_SetSearchFilters({criteria});
 
+        // Output
         const filteredGoods = mocks.filter(mock => mock.name === criteria.keywords);
-        const outputAction = new GSVC_SetSearchResults({ goods:filteredGoods });
+        const outputAction = new GSVC_SetSearchResults({goods:filteredGoods});
 
-        (storeMock.select as Spy).and.returnValue(of(null));
-        (gsMock.getList as Spy).and.returnValue(of(mocks));
-        (gsMock.filter as Spy).and.returnValue(filteredGoods);
+        // Context
+        goodService.getList.and.returnValue(of(mocks));
+        goodService.filter.and.returnValue(filteredGoods);
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
         effects.filterGoodList$.subscribe((result:GSVC_SetSearchResults) => {
@@ -90,17 +103,20 @@ describe('Good Effects', () => {
     });
 
     it('should update state with HTTP error when setting search filters', (done) => {
+
+        // Input
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
-        const inputAction = new GSV_SetSearchFilters({ criteria });
+        const inputAction = new GSV_SetSearchFilters({criteria});
 
-        const error = new HttpErrorResponse({ status:404 });
-        const outputAction = new GAPI_GetGoodListFailure({ error });
+        // Output
+        const error = new HttpErrorResponse({status:404});
+        const outputAction = new GAPI_GetGoodListFailure({error});
 
-        (storeMock.select as Spy).and.returnValue(of(null));
-        (gsMock.getList as Spy).and.returnValue(throwError(error));
+        // Context
+        goodService.getList.and.returnValue(throwError(error));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
         effects.filterGoodList$.subscribe((result:GAPI_GetGoodListFailure) => {
@@ -111,14 +127,18 @@ describe('Good Effects', () => {
     });
 
     it('should load goods from api', (done) => {
+
+        // Input
         const inputAction = new SLV_GetGoodList();
 
-        const outputAction = new GAPI_GetGoodListSuccess({ goods:mocks });
+        // Output
+        const outputAction = new GAPI_GetGoodListSuccess({goods:mocks});
 
-        (storeMock.select as Spy).and.returnValue(of([]));
-        (gsMock.getList as Spy).and.returnValue(of(mocks));
+        // Context
+        store.dispatch(new GAPI_GetGoodListSuccess({goods:[]}));
+        goodService.getList.and.returnValue(of(mocks));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
         effects.getGoodList$.subscribe((result:GAPI_GetGoodListSuccess) => {
@@ -130,14 +150,18 @@ describe('Good Effects', () => {
     });
 
     it('should load goods from store', (done) => {
+
+        // Input
         const inputAction = new SLV_GetGoodList();
 
-        const outputAction = { type:'noop' };
+        // Output
+        const outputAction = {type:'noop'};
 
-        (storeMock.select as Spy).and.returnValue(of(mocks));
-        (gsMock.getList as Spy).and.returnValue(of(mocks));
+        // Context
+        store.dispatch(new GAPI_GetGoodListSuccess({goods:mocks}));
+        goodService.getList.and.returnValue(of(mocks));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
         effects.getGoodList$.subscribe((result:Action) => {
@@ -147,15 +171,19 @@ describe('Good Effects', () => {
     });
 
     it('should update state with HTTP error when fetching goods', (done) => {
+
+        // Input
         const inputAction = new SLV_GetGoodList();
 
-        const error = new HttpErrorResponse({ status:404 });
-        const outputAction = new GAPI_GetGoodListFailure({ error });
+        // Output
+        const error = new HttpErrorResponse({status:404});
+        const outputAction = new GAPI_GetGoodListFailure({error});
 
-        (storeMock.select as Spy).and.returnValue(of([]));
-        (gsMock.getList as Spy).and.returnValue(throwError(error));
+        // Context
+        store.dispatch(new GAPI_GetGoodListSuccess({goods:[]}));
+        goodService.getList.and.returnValue(throwError(error));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
         effects.getGoodList$.subscribe((result:GAPI_GetGoodListFailure) => {
