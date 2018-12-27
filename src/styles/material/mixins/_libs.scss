@@ -50,7 +50,7 @@
 
 @mixin ngx-datatable-core($typography-config) {
 
-    ba-root .no-results .ngx-datatable.material {
+    ba-root .no-result .ngx-datatable.material {
         datatable-header,
         datatable-footer {
             display:none;
