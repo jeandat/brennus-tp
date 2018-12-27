@@ -3,8 +3,8 @@ import { MatSlider } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { fromEvent, fromEventPattern, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilKeyChanged, filter, first, map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { fromEvent, merge, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilKeyChanged, filter, first, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Good } from '../../core/model/good.model';
 import { BaHttpErrorResponse } from '../../core/network/ba-http-error-response';
@@ -42,15 +42,14 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
 
     // Datatable
     // ---------
+    noResult = true;
     // Should we use virtual scrolling?
     scrollbarV = true;
     // Table properties
     rowHeight = 50;
     headerHeight = 50;
     footerHeight = 50;
-    pageLimit = 50;
     // DOM References
-    @ViewChild('goodsTableContainer', {read:ElementRef}) goodsTableContainer:ElementRef;
     @ViewChild('datatable') datatable:DatatableComponent;
     // Columns definition
     columns:ColumnDefinition[];
@@ -92,10 +91,13 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
         ).subscribe((criteria:SearchCriteria) => {
             // TODO read matrix parameters from url if none
             if (criteria) {
-                this.criteria.merge(criteria.clone());
+                // Initialize view with current filters - This will happen when coming from another view
+                this.criteria.merge(criteria);
                 console.log('Search criteria updated with current value in store');
+            } else {
+                // Trigger effect and API query - This will happen on page load
+                this.storeFilters(this.criteria);
             }
-            this.storeFilters(this.criteria);
         });
     }
 
@@ -139,14 +141,8 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     setGoods() {
         this.goods$ = this.store.pipe(
             select(goodSelectors.selectFilteredGoods),
-            startWith([]),
-            tap(goods => {
-                if (!goods || !goods.length) {
-                    this.goodsTableContainer.nativeElement.classList.add('no-results');
-                } else {
-                    this.goodsTableContainer.nativeElement.classList.remove('no-results');
-                }
-            })
+            // startWith([]),
+            tap(goods => (this.noResult = !goods || !goods.length))
         );
     }
 

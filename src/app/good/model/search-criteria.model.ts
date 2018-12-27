@@ -17,9 +17,7 @@ export class SearchCriteria {
     }
 
     merge(criteria:SearchCriteria) {
-        if (criteria) {
-            Object.assign(this, criteria);
-        }
+        criteria && Object.assign(this, criteria.clone());
     }
 
     reset() {

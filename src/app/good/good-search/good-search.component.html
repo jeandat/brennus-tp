@@ -8,11 +8,11 @@
     </mat-form-field>
     <div class="range-field min-quality-filter">
         <label for="min-quality-slider">Min quality</label>
-        <mat-slider #minQualitySlider id="min-quality-slider" thumbLabel min="1" max="50"></mat-slider>
+        <mat-slider #minQualitySlider id="min-quality-slider" thumbLabel min="1" max="50" [value]="criteria.minQuality"></mat-slider>
     </div>
 </form>
 
-<div #goodsTableContainer class="goods-table-container no-results not-selectable">
+<div class="goods-table-container not-selectable" [ngClass]="{'no-result': noResult}">
     <ngx-datatable
         #datatable
         class="material"
