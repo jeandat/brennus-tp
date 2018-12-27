@@ -8,7 +8,7 @@ import { debounceTime, distinctUntilKeyChanged, filter, first, map, startWith, t
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Good } from '../../core/model/good.model';
 import { BaHttpErrorResponse } from '../../core/network/ba-http-error-response';
-import { SnackBar } from '../../core/snackbar/snackbar.service';
+import { SnackBarService } from '../../core/snackbar/snackbar.service';
 import { AppState } from '../../core/store/core.reducer';
 import { GoodService } from '../good-service/good.service';
 import { SearchCriteria } from '../model/search-criteria.model';
@@ -68,7 +68,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
         private store:Store<AppState>,
         private router:Router,
         private route:ActivatedRoute,
-        private snackbar:SnackBar) {
+        private snackbar:SnackBarService) {
     }
 
     ngOnInit() {

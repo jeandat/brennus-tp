@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { SnackBar, SnackBarType } from '../snackbar/snackbar.service';
+import { SnackBarService, SnackBarType } from '../snackbar/snackbar.service';
 import { BaHttpErrorResponse } from './ba-http-error-response';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class CommonErrorsFilter implements HttpInterceptor {
 
-    constructor(private snackbar:SnackBar, private router:Router) {}
+    constructor(private snackbar:SnackBarService, private router:Router) {}
 
     intercept(req:HttpRequest<any>, next:HttpHandler):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(

@@ -3,28 +3,29 @@ import { HttpRequest } from '@angular/common/http/src/request';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { SnackBar } from '../snackbar/snackbar.service';
+import { SnackBarService } from '../snackbar/snackbar.service';
 import { CommonErrorsFilter } from './common-errors-filter.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import Spy = jasmine.Spy;
+import SpyObj = jasmine.SpyObj;
 
 
 describe('CommonErrorsFilter', () => {
 
     let service:CommonErrorsFilter;
-    const snackbar = jasmine.createSpyObj('SnackBar', ['showError']) as SnackBar;
+    const snackbar:SpyObj<SnackBarService> = jasmine.createSpyObj('SnackBarService', ['showError']);
     const createErrorResponse = (status) => ({ status } as HttpErrorResponse);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports:[ RouterTestingModule ],
-            providers:[ CommonErrorsFilter, { provide:SnackBar, useValue:snackbar } ]
+            providers:[ CommonErrorsFilter, { provide:SnackBarService, useValue:snackbar } ]
         }).compileComponents();
     });
 
     beforeEach(() => {
         service = TestBed.get(CommonErrorsFilter);
-        (snackbar.showError as Spy).calls.reset();
+        snackbar.showError.calls.reset();
     });
 
     it('should process a timeout error', fakeAsync(() => {
@@ -35,7 +36,7 @@ describe('CommonErrorsFilter', () => {
             () => fail('should have timed out'),
             () => {
                 expect(snackbar.showError).toHaveBeenCalled();
-                expect((snackbar.showError as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError.calls.count()).toBe(1);
             }
         );
         tick(35000);
@@ -49,7 +50,7 @@ describe('CommonErrorsFilter', () => {
             () => fail('should have failed w/ 504 error code'),
             () => {
                 expect(snackbar.showError).toHaveBeenCalled();
-                expect((snackbar.showError as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError.calls.count()).toBe(1);
             }
         );
         tick(35000);
@@ -63,7 +64,7 @@ describe('CommonErrorsFilter', () => {
             () => fail('should have failed w/ 503 error code'),
             () => {
                 expect(snackbar.showError).toHaveBeenCalled();
-                expect((snackbar.showError as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError.calls.count()).toBe(1);
             }
         );
         tick(35000);
@@ -77,7 +78,7 @@ describe('CommonErrorsFilter', () => {
             () => fail('should have failed w/ 0 error code'),
             () => {
                 expect(snackbar.showError).toHaveBeenCalled();
-                expect((snackbar.showError as Spy).calls.count()).toBe(1);
+                expect(snackbar.showError.calls.count()).toBe(1);
             }
         );
         tick(35000);

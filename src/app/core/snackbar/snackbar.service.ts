@@ -32,7 +32,7 @@ export const defaultOptions:MatSnackBarConfigExtended = {
 @Injectable({
     providedIn:'root'
 })
-export class SnackBar {
+export class SnackBarService {
 
     private ref:MatSnackBarRef<any>;
 
