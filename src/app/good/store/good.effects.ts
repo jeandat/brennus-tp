@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, exhaustMap, first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Good } from '../../core/model/good.model';
 import { ActionWithPayload, AppState } from '../../core/store/core.reducer';
+import { NO_ACTION } from '../../core/store/no-action';
 import { GoodService } from '../good-service/good.service';
 import { SearchCriteria } from '../model/search-criteria.model';
 import {
@@ -29,15 +30,15 @@ export class GoodEffects {
             GoodActionTypes.SLV_GetGoodList
         ),
         withLatestFrom(this.store.pipe(select(goodSelectors.selectAll))),
-        switchMap(([action, goods]:[ActionWithPayload, Good[]]) => {
+        exhaustMap(([action, goods]:[ActionWithPayload, Good[]]) => {
             console.log(`Intercepted action of type '${action.type}' with payload:`, action.payload);
             if (goods && goods.length) {
                 console.log(`Goods found in store`);
                 // Noop.
-                return of({type:'noop'} as ActionWithPayload);
+                return of(NO_ACTION);
             }
             console.log('Goods not found in store => downloading…');
-            this.ais.on('getGoodList$');
+            this.ais.on();
             return this.goodService.getList().pipe(
                 map((fetchedGoods:Good[]) => {
                     console.log('HTTP Get Good List Success:', fetchedGoods);
@@ -48,7 +49,7 @@ export class GoodEffects {
                         return of(new GAPI_GetGoodListFailure({error}));
                     }
                 ),
-                tap(() => this.ais.off('getGoodList$'))
+                tap(() => this.ais.off())
             );
         }),
         tap(result => console.log('Action returned by effect:', result))
@@ -71,7 +72,7 @@ export class GoodEffects {
             return this.store.pipe(
                 select(goodSelectors.selectAll),
                 first(),
-                switchMap((goods:Good[]) => {
+                exhaustMap((goods:Good[]) => {
                     if (!goods || !goods.length) {
                         return this.goodService.getList().pipe(
                             map((fetchedGoods:Good[]) => {

@@ -1,13 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store, StoreModule } from '@ngrx/store';
-import { of, ReplaySubject, throwError } from 'rxjs';
+import { EMPTY, of, ReplaySubject, throwError } from 'rxjs';
 import { activityIndicatorServiceStub } from '../../../testing/activity-indicator-service.stub';
 import { goodServiceStub } from '../../../testing/good-service.stub';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Good } from '../../core/model/good.model';
 import { ActionWithPayload } from '../../core/store/core.reducer';
+import { NO_ACTION } from '../../core/store/no-action';
 import { GoodService } from '../good-service/good.service';
 import { SearchCriteria } from '../model/search-criteria.model';
 import {
@@ -19,7 +20,6 @@ import {
 } from './good.actions';
 import { GoodEffects } from './good.effects';
 import { goodReducer, GoodState } from './good.reducer';
-import Spy = jasmine.Spy;
 import SpyObj = jasmine.SpyObj;
 
 
@@ -155,7 +155,7 @@ describe('Good Effects', () => {
         const inputAction = new SLV_GetGoodList();
 
         // Output
-        const outputAction = {type:'noop'};
+        const outputAction = NO_ACTION;
 
         // Context
         store.dispatch(new GAPI_GetGoodListSuccess({goods:mocks}));
@@ -164,10 +164,12 @@ describe('Good Effects', () => {
         // Trigger effect
         actions.next(inputAction);
 
-        effects.getGoodList$.subscribe((result:Action) => {
-            expect(result).toEqual(outputAction);
-            done();
-        });
+        effects.getGoodList$.subscribe(
+            (result:Action) => {
+                expect(result).toEqual(outputAction);
+                done();
+            }
+        );
     });
 
     it('should update state with HTTP error when fetching goods', (done) => {
