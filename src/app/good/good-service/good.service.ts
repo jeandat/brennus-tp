@@ -1,10 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Good } from '../../core/model/good.model';
 import { SearchCriteria } from '../model/search-criteria.model';
-import { delay, map, tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -12,7 +12,8 @@ import { delay, map, tap } from 'rxjs/operators';
 })
 export class GoodService {
 
-    constructor(private http:HttpClient) {}
+    constructor(private http:HttpClient) {
+    }
 
     getList():Observable<Good[]> {
         return this.http.get<Good[]>(`${environment.apiUrl}/items/`).pipe(

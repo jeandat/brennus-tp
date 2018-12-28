@@ -1,21 +1,22 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { SnackBarService, SnackBarType } from '../snackbar/snackbar.service';
-import { BaHttpErrorResponse } from './ba-http-error-response';
-import { Router } from '@angular/router';
+import { SnackBarService } from '../snackbar/snackbar.service';
+import { AppError } from './app-error';
 
 @Injectable()
 export class CommonErrorsFilter implements HttpInterceptor {
 
-    constructor(private snackbar:SnackBarService, private router:Router) {}
+    constructor(private snackbar:SnackBarService, private router:Router) {
+    }
 
     intercept(req:HttpRequest<any>, next:HttpHandler):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             timeout(30000),
-            catchError((response:BaHttpErrorResponse) => {
+            catchError((response:HttpErrorResponse) => {
                 const status = response.status;
                 let processed = false;
                 if ((!navigator.onLine && !environment.mocks) || status === 0) {
@@ -31,7 +32,7 @@ export class CommonErrorsFilter implements HttpInterceptor {
                     this.displayTimeOut();
                     processed = true;
                 }
-                response.processed = processed;
+                (response as AppError).processed = processed;
                 return throwError(response);
             })
         );

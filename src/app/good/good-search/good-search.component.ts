@@ -7,7 +7,7 @@ import { fromEvent, merge, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged, filter, first, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Good } from '../../core/model/good.model';
-import { BaHttpErrorResponse } from '../../core/network/ba-http-error-response';
+import { AppError } from '../../core/network/app-error';
 import { SnackBarService } from '../../core/snackbar/snackbar.service';
 import { AppState } from '../../core/store/core.reducer';
 import { GoodService } from '../good-service/good.service';
@@ -104,10 +104,10 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     listenToErrors() {
         this.store.pipe(
             select(goodSelectors.selectError),
-            filter((err:BaHttpErrorResponse) => err != null && !err.processed),
+            filter((err:AppError) => err != null && !err.processed),
             takeUntil(this.done)
         ).subscribe(
-            (err:BaHttpErrorResponse) => {
+            (err:AppError) => {
                 this.snackbar.showError('Server is temporarily unavailable');
             }
         );
