@@ -40,13 +40,13 @@ export function goodReducer(state = goodInitialState, action:GoodActions):GoodSt
             return {...state, ...diff} as GoodState;
         }
 
-        case GoodActionTypes.GSV_SetSearchFilters: {
+        case GoodActionTypes.GSV_GetFilteredGoods: {
             const criteria = action.payload.criteria;
             const diff = {criteria};
             return {...state, ...diff} as GoodState;
         }
 
-        case GoodActionTypes.GSVC_SetSearchResults: {
+        case GoodActionTypes.GSVC_GetFilteredGoodsSuccess: {
             const goods = action.payload.goods;
             const diff = {filteredGoods:goods};
             return {...state, ...diff} as GoodState;

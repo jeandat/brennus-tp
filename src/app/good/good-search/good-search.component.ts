@@ -12,7 +12,7 @@ import { SnackBarService } from '../../core/snackbar/snackbar.service';
 import { AppState } from '../../core/store/core.reducer';
 import { GoodService } from '../good-service/good.service';
 import { SearchCriteria } from '../model/search-criteria.model';
-import { GSV_SetSearchFilters } from '../store/good.actions';
+import { GSV_GetFilteredGoods } from '../store/good.actions';
 import { goodSelectors } from '../store/good.selectors';
 import { ColumnDefinition } from './column-definition';
 
@@ -158,7 +158,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
     }
 
     storeFilters(criteria:SearchCriteria) {
-        this.store.dispatch(new GSV_SetSearchFilters({criteria:criteria.clone()}));
+        this.store.dispatch(new GSV_GetFilteredGoods({criteria:criteria.clone()}));
         console.log('Search criteria updated in store');
     }
 

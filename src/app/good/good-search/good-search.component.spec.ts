@@ -17,7 +17,7 @@ import { SnackBarService } from '../../core/snackbar/snackbar.service';
 import { AppState } from '../../core/store/core.reducer';
 import { SharedModule } from '../../shared/shared.module';
 import { GoodService } from '../good-service/good.service';
-import { GSVC_SetSearchResults } from '../store/good.actions';
+import { GSVC_GetFilteredGoodsSuccess } from '../store/good.actions';
 import { goodReducer, GoodState } from '../store/good.reducer';
 import { GoodSearchComponent } from './good-search.component';
 
@@ -84,7 +84,7 @@ describe('GoodSearchComponent', () => {
         expect(component.noResult).toBe(true);
         expect(goods).toBeFalsy();
 
-        store.dispatch(new GSVC_SetSearchResults({goods:goodsMock}));
+        store.dispatch(new GSVC_GetFilteredGoodsSuccess({goods:goodsMock}));
 
         expect(component.noResult).toBe(false);
         const tableContainerDe = fixture.debugElement.query(By.css('.goods-table-container'));

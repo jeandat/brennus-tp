@@ -11,8 +11,8 @@ export enum GoodActionTypes {
     SLV_GetGoodList         = '[Statistic List View] Get Good List',
     GAPI_GetGoodListSuccess = '[Good API] Get Good List Success',
     GAPI_GetGoodListFailure = '[Good API] Get Good List Failure',
-    GSV_SetSearchFilters    = '[Good Search View] Set Search Filters',
-    GSVC_SetSearchResults   = '[Good Service] Set Search Results',
+    GSV_GetFilteredGoods    = '[Good Search View] Get Filtered Goods',
+    GSVC_GetFilteredGoodsSuccess   = '[Good Service] Get Filtered Goods Success',
 
     ResetGoodList           = 'Reset Good List'
 }
@@ -52,15 +52,15 @@ export class GAPI_GetGoodListFailure implements Action {
 }
 
 
-export class GSV_SetSearchFilters implements Action {
-    readonly type = GoodActionTypes.GSV_SetSearchFilters;
+export class GSV_GetFilteredGoods implements Action {
+    readonly type = GoodActionTypes.GSV_GetFilteredGoods;
 
     constructor(public payload:{ criteria:SearchCriteria }) {}
 }
 
 
-export class GSVC_SetSearchResults implements Action {
-    readonly type = GoodActionTypes.GSVC_SetSearchResults;
+export class GSVC_GetFilteredGoodsSuccess implements Action {
+    readonly type = GoodActionTypes.GSVC_GetFilteredGoodsSuccess;
 
     constructor(public payload:{ goods:Good[] }) {}
 }
@@ -72,5 +72,5 @@ export type GoodActions =
     | ResetGoodList
     | GAPI_GetGoodListSuccess
     | GAPI_GetGoodListFailure
-    | GSV_SetSearchFilters
-    | GSVC_SetSearchResults;
+    | GSV_GetFilteredGoods
+    | GSVC_GetFilteredGoodsSuccess;

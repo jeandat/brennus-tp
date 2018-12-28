@@ -14,8 +14,8 @@ import {
     GAPI_GetGoodListFailure,
     GAPI_GetGoodListSuccess,
     GoodActionTypes,
-    GSV_SetSearchFilters,
-    GSVC_SetSearchResults
+    GSV_GetFilteredGoods,
+    GSVC_GetFilteredGoodsSuccess
 } from './good.actions';
 import { goodSelectors } from './good.selectors';
 
@@ -59,9 +59,9 @@ export class GoodEffects {
     @Effect()
     filterGoodList$:Observable<ActionWithPayload> = this.actions$.pipe(
         ofType(
-            GoodActionTypes.GSV_SetSearchFilters
+            GoodActionTypes.GSV_GetFilteredGoods
         ),
-        map((action:GSV_SetSearchFilters) => {
+        map((action:GSV_GetFilteredGoods) => {
             console.log(`Intercepted action of type '${action.type}' with payload:`, action.payload);
             return action.payload.criteria;
         }),
@@ -87,7 +87,7 @@ export class GoodEffects {
                 map((goods:Good[]) => this.goodService.filter(goods, criteria)),
                 map((goods:Good[]) => {
                     console.log(`After filtering, there is ${goods.length} goods:`, goods);
-                    return new GSVC_SetSearchResults({goods});
+                    return new GSVC_GetFilteredGoodsSuccess({goods});
                 }),
                 catchError((error:HttpErrorResponse) => {
                     console.error('HTTP Get Good List Failure:', error);

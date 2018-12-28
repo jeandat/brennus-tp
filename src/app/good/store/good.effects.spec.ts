@@ -14,8 +14,8 @@ import { SearchCriteria } from '../model/search-criteria.model';
 import {
     GAPI_GetGoodListFailure,
     GAPI_GetGoodListSuccess,
-    GSV_SetSearchFilters,
-    GSVC_SetSearchResults,
+    GSV_GetFilteredGoods,
+    GSVC_GetFilteredGoodsSuccess,
     SLV_GetGoodList
 } from './good.actions';
 import { GoodEffects } from './good.effects';
@@ -57,11 +57,11 @@ describe('Good Effects', () => {
         // Input
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
-        const inputAction = new GSV_SetSearchFilters({criteria});
+        const inputAction = new GSV_GetFilteredGoods({criteria});
 
         // Output
         const filteredGoods = mocks.filter(mock => mock.name === criteria.keywords);
-        const outputAction = new GSVC_SetSearchResults({goods:filteredGoods});
+        const outputAction = new GSVC_GetFilteredGoodsSuccess({goods:filteredGoods});
 
         // Set context
         store.dispatch(new GAPI_GetGoodListSuccess({goods:mocks}));
@@ -70,8 +70,8 @@ describe('Good Effects', () => {
         // Trigger effect
         actions.next(inputAction);
 
-        effects.filterGoodList$.subscribe((result:GSVC_SetSearchResults) => {
-            expect(result instanceof GSVC_SetSearchResults).toBe(true);
+        effects.filterGoodList$.subscribe((result:GSVC_GetFilteredGoodsSuccess) => {
+            expect(result instanceof GSVC_GetFilteredGoodsSuccess).toBe(true);
             expect(result).toEqual(outputAction);
             done();
         });
@@ -82,11 +82,11 @@ describe('Good Effects', () => {
         // Input
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
-        const inputAction = new GSV_SetSearchFilters({criteria});
+        const inputAction = new GSV_GetFilteredGoods({criteria});
 
         // Output
         const filteredGoods = mocks.filter(mock => mock.name === criteria.keywords);
-        const outputAction = new GSVC_SetSearchResults({goods:filteredGoods});
+        const outputAction = new GSVC_GetFilteredGoodsSuccess({goods:filteredGoods});
 
         // Context
         goodService.getList.and.returnValue(of(mocks));
@@ -95,8 +95,8 @@ describe('Good Effects', () => {
         // Trigger effect
         actions.next(inputAction);
 
-        effects.filterGoodList$.subscribe((result:GSVC_SetSearchResults) => {
-            expect(result instanceof GSVC_SetSearchResults).toBe(true);
+        effects.filterGoodList$.subscribe((result:GSVC_GetFilteredGoodsSuccess) => {
+            expect(result instanceof GSVC_GetFilteredGoodsSuccess).toBe(true);
             expect(result).toEqual(outputAction);
             done();
         });
@@ -107,7 +107,7 @@ describe('Good Effects', () => {
         // Input
         const criteria = new SearchCriteria();
         criteria.keywords = 'foo';
-        const inputAction = new GSV_SetSearchFilters({criteria});
+        const inputAction = new GSV_GetFilteredGoods({criteria});
 
         // Output
         const error = new HttpErrorResponse({status:404});

@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { goodInitialState, goodReducer } from './good.reducer';
 import { Good } from '../../core/model/good.model';
-import { GAPI_GetGoodListFailure, GAPI_GetGoodListSuccess, GSV_SetSearchFilters, ResetGoodList } from './good.actions';
+import { GAPI_GetGoodListFailure, GAPI_GetGoodListSuccess, GSV_GetFilteredGoods, ResetGoodList } from './good.actions';
 import { SearchCriteria } from '../model/search-criteria.model';
 
 
@@ -43,7 +43,7 @@ describe('Good Reducer', () => {
     it('should set good filters', () => {
         const criteria = new SearchCriteria();
         criteria.keywords = 'elixir';
-        const action = new GSV_SetSearchFilters({ criteria});
+        const action = new GSV_GetFilteredGoods({ criteria});
         const newState = goodReducer(goodInitialState, action);
         expect(newState.ids.length).toBe(0);
         expect(Object.keys(newState.entities).length).toBe(0);
