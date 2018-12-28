@@ -8,9 +8,9 @@ export class SearchCriteria {
     keywords = '';
     hash?:number;
 
-    properties = [ 'minQuality', 'keywords' ];
+    private properties = ['minQuality', 'keywords'];
 
-    constructor(criteria?:SearchCriteria) {
+    constructor(criteria?:any) {
         if (criteria) {
             Object.assign(this, criteria);
         }
@@ -31,8 +31,8 @@ export class SearchCriteria {
     updateHash() {
         let valueToHash = '';
         for (const prop of this.properties) {
-            if (!this[ prop ]) continue;
-            valueToHash += this[ prop ];
+            if (!this[prop]) continue;
+            valueToHash += this[prop];
         }
         this.hash = !valueToHash ? 0 : hash(valueToHash);
         return this;
@@ -42,7 +42,7 @@ export class SearchCriteria {
         const params:URLSearchParams = new URLSearchParams();
         for (const prop of this.properties) {
             // @ts-ignore
-            params.set(prop, this[ prop ]);
+            params.set(prop, this[prop]);
         }
         return params;
     }
@@ -50,7 +50,7 @@ export class SearchCriteria {
     toParams():Params {
         const params:Params = {};
         for (const prop of this.properties) {
-            params[ prop ] = this[ prop ];
+            params[prop] = this[prop];
         }
         return params;
     }
@@ -61,7 +61,7 @@ export class SearchCriteria {
             if (!this.properties.includes(key)) return;
             const value = params.get(key);
             if (!value) return;
-            this[ key ] = value;
+            this[key] = value;
         });
     }
 

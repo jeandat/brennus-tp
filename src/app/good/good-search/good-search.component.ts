@@ -130,7 +130,7 @@ export class GoodSearchComponent implements OnInit, OnDestroy {
             map(() => this.criteria.updateHash().clone()),
             distinctUntilKeyChanged('hash'),
             tap((criteria:SearchCriteria) => {
-                console.log('Criteria hash has changed');
+                console.log('Criteria hash has changed:', criteria);
             }),
             takeUntil(this.done)
         ).subscribe(
