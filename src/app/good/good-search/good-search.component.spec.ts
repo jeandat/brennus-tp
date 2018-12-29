@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSliderModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -7,6 +7,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { min } from 'rxjs/operators';
+import { AbstractComponentTester } from '../../../testing/abstract-component-tester';
 import { activityIndicatorServiceStub } from '../../../testing/activity-indicator-service.stub';
 import { goodServiceStub } from '../../../testing/good-service.stub';
 import { failure } from '../../../testing/helpers';
@@ -24,12 +26,39 @@ import { goodReducer, GoodState } from '../store/good.reducer';
 import { GoodSearchComponent } from './good-search.component';
 import SpyObj = jasmine.SpyObj;
 
+class ComponentTester extends AbstractComponentTester<GoodSearchComponent> {
+
+    get keywords():string {
+        const searchInput = this.fixture.nativeElement.querySelector('#search-input');
+        return searchInput.value;
+    }
+
+    set keywords(keywords:string) {
+        const searchInput = this.fixture.nativeElement.querySelector('#search-input');
+        searchInput.value = keywords;
+        searchInput.dispatchEvent(new Event('input'));
+    }
+
+    get minQuality():number {
+        const minQualitySliderDe = this.fixture.debugElement.query(By.css('#min-quality-slider'));
+        return minQualitySliderDe.componentInstance.value;
+    }
+
+    set minQuality(minQuality:number) {
+        const minQualitySliderDe = this.fixture.debugElement.query(By.css('#min-quality-slider'));
+        minQualitySliderDe.componentInstance.value = minQuality;
+        minQualitySliderDe.componentInstance.change.emit({value:minQuality});
+    }
+
+}
+
 
 describe('GoodSearchComponent', () => {
 
     let component:GoodSearchComponent;
     let fixture:ComponentFixture<GoodSearchComponent>;
     let store:Store<GoodState>;
+    let tester:ComponentTester;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -55,6 +84,7 @@ describe('GoodSearchComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(GoodSearchComponent);
+        tester = new ComponentTester(fixture);
         component = fixture.componentInstance;
         spyOn(component, 'storeFilters').and.callThrough();
         store = TestBed.get(Store);
@@ -107,12 +137,10 @@ describe('GoodSearchComponent', () => {
         expect(component.criteria.minQuality).toBe(criteria.minQuality);
         expect(component.criteria.keywords).toBe(criteria.keywords);
 
-        tick();
+        flush();
 
-        const searchInputDe = fixture.debugElement.query(By.css('#search-input'));
-        const minQualitySliderDe = fixture.debugElement.query(By.css('#min-quality-slider'));
-        expect(searchInputDe.nativeElement.value).toBe(criteria.keywords);
-        expect(minQualitySliderDe.componentInstance.value).toBe(criteria.minQuality);
+        expect(tester.keywords).toBe(criteria.keywords);
+        expect(tester.minQuality).toBe(criteria.minQuality);
     }));
 
     it('should read current criteria from store and trigger first load', () => {
@@ -139,32 +167,25 @@ describe('GoodSearchComponent', () => {
     it('should reset keywords and update search filters', fakeAsync((done) => {
         const keywords = 'rag';
         component.criteria.keywords = keywords;
-        fixture.detectChanges();
-        tick();
+        tester.detectAndFlush();
 
-        const searchInput = fixture.nativeElement.querySelector('#search-input');
-        expect(searchInput.value).toBe(keywords);
-        fixture.detectChanges();
+        expect(tester.keywords).toBe(keywords);
 
+        fixture.detectChanges();
         const clearIcon = fixture.nativeElement.querySelector('.clear-icon');
         expect(clearIcon).not.toBeNull();
         clearIcon.click();
-        fixture.detectChanges();
-        tick();
+        tester.detectAndFlush();
 
         expect(component.criteria.keywords).toBe('');
-        expect(searchInput.value).toBe('');
+        expect(tester.keywords).toBe('');
     }));
 
     it('should update search filters on keywords change', fakeAsync(() => {
         const keywords = 'rag';
-        fixture.detectChanges();
-        tick();
+        tester.detectAndFlush();
 
-        const searchInput = fixture.nativeElement.querySelector('#search-input');
-        searchInput.value = keywords;
-        searchInput.dispatchEvent(new Event('input'));
-
+        tester.keywords = keywords;
         fixture.detectChanges();
         tick(1000);
 
@@ -174,11 +195,9 @@ describe('GoodSearchComponent', () => {
 
     it('should update search filters on min quality change', fakeAsync(() => {
         const minQuality = 50;
-        fixture.detectChanges();
+        tester.detectAndFlush();
 
-        const minQualitySliderDe = fixture.debugElement.query(By.css('#min-quality-slider'));
-        minQualitySliderDe.componentInstance.change.emit({value:minQuality});
-
+        tester.minQuality = minQuality;
         tick(1000);
 
         expect(component.storeFilters).toHaveBeenCalledWith(component.criteria);
